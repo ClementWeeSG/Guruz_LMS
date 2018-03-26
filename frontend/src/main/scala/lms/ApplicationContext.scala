@@ -1,6 +1,9 @@
-package io.udash.demos.rest
+package lms
 
 import io.udash.Application
+import io.udash.demos.rest.MainServerREST
+import lms.routing.{RoutingRegistryDef, RoutingState}
+import lms.views.StatesToViewFactoryDef
 import org.scalajs.dom
 
 import scala.concurrent.ExecutionContext.Implicits.global

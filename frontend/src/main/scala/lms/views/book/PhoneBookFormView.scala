@@ -1,4 +1,4 @@
-package io.udash.demos.rest.views.book
+package lms.views.book
 
 import io.udash._
 import io.udash.bootstrap.BootstrapStyles
@@ -7,6 +7,7 @@ import io.udash.bootstrap.button.{ButtonStyle, UdashButton}
 import io.udash.bootstrap.form.UdashForm
 import io.udash.css.CssView
 import io.udash.demos.rest.model.ContactId
+import io.udash.demos.rest.views.book.PhoneBookEditorModel
 import org.scalajs.dom.raw.Event
 
 class PhoneBookFormView(model: ModelProperty[PhoneBookEditorModel], presenter: PhoneBookFormPresenter)

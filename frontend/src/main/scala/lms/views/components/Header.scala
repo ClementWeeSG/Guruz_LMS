@@ -3,9 +3,9 @@ package io.udash.demos.rest.views.components
 import io.udash._
 import io.udash.bootstrap.navs.{UdashNav, UdashNavbar}
 import io.udash.demos.rest.config.ExternalUrls
-import io.udash.demos.rest.{ApplicationContext, IndexState}
+import lms.ApplicationContext
+import lms.routing.IndexState
 import org.scalajs.dom.raw.Element
-
 import scalatags.JsDom.all._
 
 object Header {

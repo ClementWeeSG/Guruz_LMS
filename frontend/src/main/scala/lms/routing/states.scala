@@ -1,4 +1,4 @@
-package io.udash.demos.rest
+package lms.routing
 
 import io.udash._
 import io.udash.demos.rest.model.{ContactId, PhoneBookId}

@@ -1,16 +1,17 @@
-package io.udash.demos.rest.views.book
+package lms.views.book
 
 import io.udash._
 import io.udash.core.Presenter
 import io.udash.demos.rest.model.{ContactId, PhoneBookId, PhoneBookInfo}
-import io.udash.demos.rest.{ApplicationContext, IndexState, PhoneBookFormState}
+import io.udash.demos.rest.views.book.PhoneBookEditorModel
+import lms.routing._
 import org.scalajs.dom
 
 import scala.util.{Failure, Success}
 import scala.concurrent.ExecutionContext.Implicits.global
 
 class PhoneBookFormPresenter(model: ModelProperty[PhoneBookEditorModel]) extends Presenter[PhoneBookFormState] {
-  import ApplicationContext._
+  import lms.ApplicationContext._
 
   override def handleState(state: PhoneBookFormState): Unit = {
     state match {

@@ -1,10 +1,11 @@
-package io.udash.demos.rest
+package lms.views
 
 import io.udash._
 import io.udash.demos.rest.views._
-import io.udash.demos.rest.views.book.PhoneBookFormViewFactory
+import lms.views.book.PhoneBookFormViewFactory
 import io.udash.demos.rest.views.contact.ContactFormViewFactory
 import io.udash.demos.rest.views.index.IndexViewFactory
+import lms.routing._
 
 class StatesToViewFactoryDef extends ViewFactoryRegistry[RoutingState] {
   def matchStateToResolver(state: RoutingState): ViewFactory[_ <: RoutingState] = state match {

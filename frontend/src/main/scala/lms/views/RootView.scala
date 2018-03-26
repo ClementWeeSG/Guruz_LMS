@@ -4,9 +4,8 @@ import io.udash._
 import io.udash.bootstrap.utils.UdashJumbotron
 import io.udash.bootstrap.{BootstrapStyles, UdashBootstrap}
 import io.udash.css._
-import io.udash.demos.rest.RootState
 import io.udash.demos.rest.views.components.Header
-
+import lms.routing.RootState
 import scalatags.JsDom.tags2.main
 
 object RootViewFactory extends StaticViewFactory[RootState.type](() => new RootView)

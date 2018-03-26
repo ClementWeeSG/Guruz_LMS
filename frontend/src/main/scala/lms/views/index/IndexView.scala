@@ -4,9 +4,10 @@ import io.udash._
 import io.udash.bootstrap.button.{ButtonSize, ButtonStyle, UdashButton}
 import io.udash.bootstrap.table.UdashTable
 import io.udash.css.CssView
-import io.udash.demos.rest._
 import io.udash.demos.rest.model.Contact
 import io.udash.properties.PropertyCreator
+import lms.ApplicationContext
+import lms.routing.{ContactFormState, PhoneBookFormState, RoutingState}
 
 class IndexView(model: ModelProperty[IndexViewModel], presenter: IndexPresenter) extends FinalView with CssView {
   import scalatags.JsDom.all._

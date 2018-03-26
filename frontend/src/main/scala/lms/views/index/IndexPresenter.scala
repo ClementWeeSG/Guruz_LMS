@@ -1,8 +1,8 @@
 package io.udash.demos.rest.views.index
 
 import io.udash._
-import io.udash.demos.rest.IndexState
 import io.udash.demos.rest.model.{Contact, ContactId, PhoneBookId, PhoneBookInfo}
+import lms.routing.IndexState
 import org.scalajs.dom
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -10,7 +10,7 @@ import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 class IndexPresenter(model: ModelProperty[IndexViewModel]) extends Presenter[IndexState.type] {
-  import io.udash.demos.rest.ApplicationContext._
+  import lms.ApplicationContext._
 
   override def handleState(state: IndexState.type): Unit =
     refresh()

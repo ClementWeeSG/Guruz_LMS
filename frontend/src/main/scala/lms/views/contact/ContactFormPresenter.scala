@@ -3,14 +3,14 @@ package io.udash.demos.rest.views.contact
 import io.udash._
 import io.udash.core.Presenter
 import io.udash.demos.rest.model.{Contact, ContactId}
-import io.udash.demos.rest.{ContactFormState, ApplicationContext, IndexState}
+import lms.routing.{ContactFormState, IndexState}
 import org.scalajs.dom
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
 class ContactFormPresenter(model: ModelProperty[ContactEditorModel]) extends Presenter[ContactFormState] {
-  import ApplicationContext._
+  import lms.ApplicationContext._
 
   override def handleState(state: ContactFormState): Unit = {
     state match {

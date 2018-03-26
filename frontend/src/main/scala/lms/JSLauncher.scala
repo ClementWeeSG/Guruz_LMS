@@ -1,5 +1,6 @@
-package io.udash.demos.rest
+package lms
 
+import ApplicationContext.applicationInstance
 import io.udash.logging.CrossLogging
 import io.udash.wrappers.jquery._
 import org.scalajs.dom.Element
@@ -7,7 +8,6 @@ import org.scalajs.dom.Element
 import scala.scalajs.js.annotation.JSExport
 
 object JSLauncher extends CrossLogging {
-  import ApplicationContext._
 
   @JSExport
   def main(args: Array[String]): Unit = {

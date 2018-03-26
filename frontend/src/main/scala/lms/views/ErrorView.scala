@@ -1,7 +1,7 @@
 package io.udash.demos.rest.views
 
 import io.udash._
-import io.udash.demos.rest.IndexState
+import lms.routing.IndexState
 
 object ErrorViewFactory extends StaticViewFactory[IndexState.type](() => new ErrorView)
 
