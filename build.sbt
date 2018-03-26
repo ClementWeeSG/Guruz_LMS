@@ -57,7 +57,7 @@ lazy val frontend = project.in(file("frontend")).enablePlugins(ScalaJSPlugin)
     libraryDependencies ++= Dependencies.frontendDeps.value,
 
     // Make this module executable in JS
-    Compile / mainClass := Some("io.udash.demos.rest.JSLauncher"),
+    Compile / mainClass := Some("lms.JSLauncher"),
     scalaJSUseMainModuleInitializer := true,
 
     // Implementation of custom tasks defined above
