@@ -9,7 +9,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class IndexPresenter(model: ModelProperty[IndexViewModel]) extends Presenter[IndexState.type] {
+class DemoIndexPresenter(model: ModelProperty[DemoIndexViewModel]) extends Presenter[IndexState.type] {
   import lms.ApplicationContext._
 
   override def handleState(state: IndexState.type): Unit =

@@ -9,7 +9,7 @@ import io.udash.properties.PropertyCreator
 import lms.ApplicationContext
 import lms.routing.{ContactFormState, PhoneBookFormState, RoutingState}
 
-class IndexView(model: ModelProperty[IndexViewModel], presenter: IndexPresenter) extends FinalView with CssView {
+class DemoIndexView(model: ModelProperty[DemoIndexViewModel], presenter: DemoIndexPresenter) extends FinalView with CssView {
   import scalatags.JsDom.all._
 
   private def headerButtons(loadedProp: Property[Boolean], creatorState: RoutingState): Modifier = {

@@ -16,6 +16,22 @@ sealed abstract class FinalRoutingState(parentState: Option[ContainerRoutingStat
 object RootState extends ContainerRoutingState(None)
 object ErrorState extends FinalRoutingState(Some(RootState))
 
-case object IndexState extends FinalRoutingState(Some(RootState))
+//Demo
+case object DemoIndexState extends FinalRoutingState(Some(RootState))
 case class ContactFormState(id: Option[ContactId] = None) extends FinalRoutingState(Some(RootState))
 case class PhoneBookFormState(id: Option[PhoneBookId] = None) extends FinalRoutingState(Some(RootState))
+
+//Actual
+case object IndexState extends FinalRoutingState(Some(RootState))
+
+case class MemberInfoState(card: Option[String]) extends FinalRoutingState(Some(RootState))
+
+case class ItemTypeInfoState(itemType: Option[String]) extends FinalRoutingState(Some(RootState))
+
+case object RankingState extends ContainerRoutingState(Some(RootState))
+
+case class ItemPopularityState(itemType: Option[String]) extends FinalRoutingState(Some(RankingState))
+
+case class ReaderOfTheYearState(year: String, library: Option[String]) extends FinalRoutingState(Some(RankingState))
+
+case class PlaceHolderRoute(url: String) extends FinalRoutingState(Some(RootState))

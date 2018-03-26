@@ -3,11 +3,12 @@ package io.udash.demos.rest.views.index
 import io.udash.demos.rest.model.{Contact, PhoneBookId}
 import io.udash.properties.{HasModelPropertyCreator, ModelPropertyCreator, PropertyCreator}
 
-class IndexViewModel(
+class DemoIndexViewModel(
   val books: DataLoadingModel[PhoneBookExtInfo] = new DataLoadingModel[PhoneBookExtInfo](),
   val contacts: DataLoadingModel[Contact] = new DataLoadingModel[Contact]()
 )
-object IndexViewModel extends HasModelPropertyCreator[IndexViewModel]
+
+object DemoIndexViewModel extends HasModelPropertyCreator[DemoIndexViewModel]
 
 class DataLoadingModel[T](
   val loaded: Boolean = false,
