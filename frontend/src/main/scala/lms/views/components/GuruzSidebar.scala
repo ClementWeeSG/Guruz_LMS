@@ -3,12 +3,15 @@ package lms.views.components
 import io.udash.bootstrap.{BootstrapStyles, BootstrapTags}
 import io.udash.css.{CssStyle, CssStyleName, CssView}
 import io.udash.properties.HasModelPropertyCreator
+import lms.ApplicationContext
 import lms.config.GuruzSidebarStyles
 import lms.routing._
 import scalatags.JsDom.all._
-import scalatags.JsDom.tags2._
+import scalatags.JsDom.tags2.nav
 
 object GuruzSidebar extends CssView {
+
+  implicit val app = ApplicationContext.applicationInstance
 
   val expanded = attr("aria-expanded")
   val toggle = BootstrapTags.dataToggle
@@ -25,13 +28,6 @@ object GuruzSidebar extends CssView {
   )
 
   def iconOf(item: SidebarItem) = i(item.icon)()
-
-  val posts = Seq(
-    ("alice", "i like pie"),
-    ("bob", "pie is evil i hate you"),
-    ("charlie", "i like pie and pie is evil, i hat myself")
-  )
-
   def navItem(item: SidebarItem): Modifier = {
     val linkUrl: String = item.destinationState.url
     val currentUrl: String = io.udash.routing.WindowUrlChangeProvider.currentFragment.toString

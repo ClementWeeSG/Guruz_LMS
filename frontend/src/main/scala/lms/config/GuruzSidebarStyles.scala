@@ -2,7 +2,6 @@ package lms.config
 
 import io.udash.bootstrap.utils.UdashIcons
 import io.udash.css.{CssStyle, CssStyleName}
-import scalatags.JsDom.all.attr
 
 object GuruzSidebarStyles {
 

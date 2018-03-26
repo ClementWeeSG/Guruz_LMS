@@ -1,7 +1,7 @@
 package io.udash.demos.rest.views
 
 import io.udash._
-import io.udash.bootstrap.utils.{UdashIcons, UdashJumbotron}
+import io.udash.bootstrap.utils.UdashIcons
 import io.udash.bootstrap.{BootstrapStyles, UdashBootstrap}
 import io.udash.css._
 import io.udash.demos.rest.views.components.Header
