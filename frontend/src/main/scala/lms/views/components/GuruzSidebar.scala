@@ -1,15 +1,12 @@
 package lms.views.components
 
 import io.udash.bootstrap.{BootstrapStyles, BootstrapTags}
-import io.udash.core.Url
 import io.udash.css.{CssStyle, CssStyleName, CssView}
 import io.udash.properties.HasModelPropertyCreator
 import lms.config.GuruzSidebarStyles
 import lms.routing._
 import scalatags.JsDom.all._
 import scalatags.JsDom.tags2._
-
-import scala.collection.mutable
 
 object GuruzSidebar extends CssView {
 
@@ -24,8 +21,7 @@ object GuruzSidebar extends CssView {
     SidebarItem(GuruzSidebarStyles.Icons.Home, "Start", IndexState),
     SidebarItem(GuruzSidebarStyles.Icons.Members, "Browse Members", MemberInfoState(None)),
     SidebarItem(GuruzSidebarStyles.Icons.Books, "Browse Collections", ItemTypeInfoState(None)),
-    SidebarItem(GuruzSidebarStyles.Icons.BestReads, "View Top Reads", ItemPopularityState(None)),
-    SidebarItem(GuruzSidebarStyles.Icons.TopReader, "View Top Reader", ReaderOfTheYearState("2018", None))
+    SidebarItem(GuruzSidebarStyles.Icons.BestReads, "View Top Reads", ItemPopularityState(None))
   )
 
   def iconOf(item: SidebarItem) = i(item.icon)()
