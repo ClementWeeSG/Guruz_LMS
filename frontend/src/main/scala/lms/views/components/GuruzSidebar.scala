@@ -22,7 +22,7 @@ object GuruzSidebar extends CssView {
 
   val defaultItems = Seq(
     SidebarItem(GuruzSidebarStyles.Icons.Home, "Start", IndexState),
-    SidebarItem(GuruzSidebarStyles.Icons.Members, "Browse Members", MemberInfoState(None)),
+    //SidebarItem(GuruzSidebarStyles.Icons.Members, "Browse Members", MemberInfoState(None)),
     SidebarItem(GuruzSidebarStyles.Icons.Books, "Browse Collections", ItemTypeInfoState(None)),
     SidebarItem(GuruzSidebarStyles.Icons.BestReads, "View Top Reads", ItemPopularityState(None))
   )

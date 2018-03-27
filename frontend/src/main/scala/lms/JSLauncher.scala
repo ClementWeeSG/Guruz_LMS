@@ -1,8 +1,8 @@
 package lms
 
-import ApplicationContext.applicationInstance
 import io.udash.logging.CrossLogging
 import io.udash.wrappers.jquery._
+import lms.ApplicationContext.applicationInstance
 import org.scalajs.dom.Element
 
 import scala.scalajs.js.annotation.JSExport
@@ -16,7 +16,16 @@ object JSLauncher extends CrossLogging {
         case None =>
           logger.error("Application root element not found! Check your index.html file!")
         case Some(root) =>
-          applicationInstance.run(root)
+          try {
+            applicationInstance.run(root)
+          } catch {
+            case ex: Exception =>
+              ex.getStackTrace.foreach(elem => println(elem.toString))
+              ex.getCause.getStackTrace.foreach(elem => println(elem.toString))
+              ex.printStackTrace()
+              ex.getCause.printStackTrace()
+          }
+
       }
     })
   }

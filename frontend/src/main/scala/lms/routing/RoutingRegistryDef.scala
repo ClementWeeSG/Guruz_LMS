@@ -18,6 +18,7 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case "/contact" / arg => ContactFormState(Try(ContactId(arg.toInt)).toOption)
     case "/book" => PhoneBookFormState()
     case "/book" / arg => PhoneBookFormState(Try(PhoneBookId(arg.toInt)).toOption)
+    case _ => ErrorState
   }
 
   private val state2Url: PartialFunction[RoutingState, String] = {
@@ -26,5 +27,6 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case ContactFormState(Some(ContactId(id))) => s"/contact/$id"
     case PhoneBookFormState(None) => "/book"
     case PhoneBookFormState(Some(PhoneBookId(id))) => s"/book/$id"
+    case _ => "/error"
   }
 }
