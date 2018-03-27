@@ -1,7 +1,7 @@
 package lms.views.components
 
 import io.udash.bootstrap.{BootstrapStyles, BootstrapTags}
-import io.udash.css.{CssStyle, CssStyleName, CssView}
+import io.udash.css.{CssStyle, CssView}
 import io.udash.properties.HasModelPropertyCreator
 import lms.ApplicationContext
 import lms.config.GuruzSidebarStyles
@@ -32,7 +32,7 @@ object GuruzSidebar extends CssView {
     val linkUrl: String = item.destinationState.url
     val currentUrl: String = io.udash.routing.WindowUrlChangeProvider.currentFragment.toString
     li(
-      (if (currentUrl.startsWith(linkUrl)) GuruzSidebarStyles.SidebarActive else CssStyleName("")),
+      GuruzSidebarStyles.SidebarActive.styleIf(currentUrl.startsWith(linkUrl)),
       toggle := "collapse",
       expanded := "false"
     )(a(
