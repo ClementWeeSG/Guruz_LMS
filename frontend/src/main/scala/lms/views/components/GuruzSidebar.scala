@@ -22,7 +22,7 @@ object GuruzSidebar extends CssView {
 
   val defaultItems = Seq(
     SidebarItem(GuruzSidebarStyles.Icons.Home, "Start", IndexState),
-    //SidebarItem(GuruzSidebarStyles.Icons.Members, "Browse Members", MemberInfoState(None)),
+    SidebarItem(GuruzSidebarStyles.Icons.Members, "Browse Members", MemberInfoState(None)),
     SidebarItem(GuruzSidebarStyles.Icons.Books, "Browse Collections", ItemTypeInfoState(None)),
     SidebarItem(GuruzSidebarStyles.Icons.BestReads, "View Top Reads", ItemPopularityState(None))
   )
@@ -32,12 +32,10 @@ object GuruzSidebar extends CssView {
     val linkUrl: String = item.destinationState.url
     val currentUrl: String = io.udash.routing.WindowUrlChangeProvider.currentFragment.toString
     li(
-      GuruzSidebarStyles.SidebarActive.styleIf(currentUrl.startsWith(linkUrl)),
-      toggle := "collapse",
-      expanded := "false"
+      GuruzSidebarStyles.SidebarActive.styleIf(currentUrl.startsWith(linkUrl))
     )(a(
-      href := item.destinationState.url
-    )(iconOf(item), item.tag)).render
+      href := "/" + item.destinationState.url
+    )(span(iconOf(item), item.tag))).render
   }
 
   def navHeader(headerName: String): Modifier = {

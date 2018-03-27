@@ -3,7 +3,7 @@ package io.udash.demos.rest.views
 import io.udash._
 import lms.routing._
 
-object ErrorViewFactory extends StaticViewFactory[RoutingState](() => new ErrorView)
+object ErrorViewFactory extends StaticViewFactory[IndexState.type](() => new ErrorView)
 
 class ErrorView extends FinalView {
   import scalatags.JsDom.all._
