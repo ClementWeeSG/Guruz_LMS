@@ -1,13 +1,14 @@
 package lms.views.memberinfo
 
 import io.udash.Presenter
+import io.udash.core.{View, ViewFactory}
 import io.udash.properties.model.ModelProperty
 import io.udash.properties.seq.SeqProperty
 import io.udash.properties.single.Property
 import lms.models.{MemberInfo, MemberInfoUtils}
 import lms.routing.MemberInfoState
 
-class MemberInfoPresenter extends Presenter[MemberInfoState] {
+class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactory[MemberInfoState] {
 
   val info: ModelProperty[MemberInfo] = ModelProperty(MemberInfo())
   val members = SeqProperty.empty[String]
@@ -33,4 +34,8 @@ class MemberInfoPresenter extends Presenter[MemberInfoState] {
         }
     }
   }
+
+  def createView() = new MemberInfoView(this)
+
+  override def create(): (View, Presenter[MemberInfoState]) = (createView(), this)
 }

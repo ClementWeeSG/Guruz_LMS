@@ -18,6 +18,8 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case "/contact" / arg => ContactFormState(Try(ContactId(arg.toInt)).toOption)
     case "/book" => PhoneBookFormState()
     case "/book" / arg => PhoneBookFormState(Try(PhoneBookId(arg.toInt)).toOption)
+    case "/members" => MemberInfoState(None)
+    case "/members" / card => MemberInfoState(Some(card))
     case _ => ErrorState
   }
 
@@ -27,6 +29,8 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case ContactFormState(Some(ContactId(id))) => s"/contact/$id"
     case PhoneBookFormState(None) => "/book"
     case PhoneBookFormState(Some(PhoneBookId(id))) => s"/book/$id"
+    case MemberInfoState(None) => "/members"
+    case MemberInfoState(Some(card)) => s"/members/$card"
     case _ => "/error"
   }
 }
