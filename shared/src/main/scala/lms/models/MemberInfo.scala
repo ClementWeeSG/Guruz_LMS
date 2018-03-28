@@ -30,6 +30,6 @@ case class BookTransactionDetails(kind: String = "book", amountOfBooks: Option[I
 
 object BookTransactionDetails extends HasModelPropertyCreator[BookTransactionDetails]
 
-case class MemberDetails(memberName: String = "", memberType: String = "", residencyType: String = "SINGAPORE", replacements: Option[Int] = None)
+case class MemberDetails(memberName: String = "", memberType: String = "", residencyType: String = "N/A", replacements: Option[Int] = None)
 
 object MemberDetails extends HasModelPropertyCreator[MemberDetails]
