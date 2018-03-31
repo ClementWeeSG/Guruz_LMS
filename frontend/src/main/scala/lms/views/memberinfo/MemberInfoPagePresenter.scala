@@ -5,9 +5,11 @@ import io.udash.core.{View, ViewFactory}
 import io.udash.properties.model.ModelProperty
 import io.udash.properties.seq.SeqProperty
 import io.udash.properties.single.Property
-import lms.models.{BookTransactionDetails, DataLoadingModel, MemberInfo, MemberInfoUtils}
+import lms.api.LMSGlobal
+import lms.models._
 import lms.routing.MemberInfoState
 
+import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
@@ -31,13 +33,31 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
       case Some("<Error>") =>
         info.subModel(_.memberDetails).subProp(_.memberName).set("<ERROR>")
       case Some(card) =>
-        MemberInfoUtils.getInfo(card).map {
-          case Some(mInfo) => info.set(mInfo)
-          case None =>
+        val loadingModel1 = ModelProperty.empty[SingleLoadingModel[MemberDetails]]
+        loadingModel1.set(new SingleLoadingModel[MemberDetails](item = MemberDetails()))
+        loadMemberDetails(loadingModel1, LMSGlobal.memberAPI.getMemberDetails(card)) { _ =>
+          val loadingModel2 = ModelProperty.empty[DataLoadingModel[BookTransactionDetails]]
+          loadingModel2.set(new DataLoadingModel[BookTransactionDetails])
+          loadTransactions(loadingModel2, LMSGlobal.memberAPI.getMemberTransactions(card))
         }
     }
 
-    def refreshTransactions(loadingModel: ModelProperty[DataLoadingModel[BookTransactionDetails]], elements: Future[Seq[BookTransactionDetails]]): Unit = {
+    def loadMemberDetails(loadingModel: ModelProperty[SingleLoadingModel[MemberDetails]], target: Future[MemberDetails])(callback: MemberDetails => Unit): Unit = {
+      loadingModel.subProp(_.loaded).set(false)
+      loadingModel.subProp(_.loadingText).set("Loading ...")
+
+      target onComplete {
+        case Success(elem) =>
+          loadingModel.subProp(_.loaded).set(true)
+          loadingModel.subProp(_.item).set(elem)
+          callback(elem)
+        case Failure(ex) =>
+          loadingModel.subProp(_.loadingText).set(s"Error: $ex")
+      }
+
+    }
+
+    def loadTransactions(loadingModel: ModelProperty[DataLoadingModel[BookTransactionDetails]], elements: Future[Seq[BookTransactionDetails]]): Unit = {
       loadingModel.subProp(_.loaded).set(false)
       loadingModel.subProp(_.loadingText).set("Loading ...")
 
@@ -50,6 +70,7 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
             loadingModel.subSeq(_.elements).append(el)
           }
         case Failure(ex) =>
+          loadingModel.subProp(_.error).set(true)
           loadingModel.subProp(_.loadingText).set(s"Error: $ex")
       }
     }

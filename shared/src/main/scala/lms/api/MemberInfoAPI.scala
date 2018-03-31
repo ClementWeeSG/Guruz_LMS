@@ -7,7 +7,7 @@ import scala.concurrent.Future
 trait MemberInfoAPI {
   def selectCardNos(): Future[List[String]]
 
-  def getMemberDetails(cardId: String): Future[Option[MemberDetails]]
+  def getMemberDetails(cardId: String): Future[MemberDetails]
 
   def getMemberTransactions(cardId: String): Future[List[BookTransactionDetails]]
 }
@@ -23,7 +23,7 @@ object DummyMemberInfoAPI extends MemberInfoAPI {
 
   override def selectCardNos() = Future.successful(dummyMembers.keySet.toList)
 
-  override def getMemberDetails(cardId: String) = Future.successful(dummyMembers.get(cardId).map(_._1))
+  override def getMemberDetails(cardId: String) = Future(dummyMembers.get(cardId).map(_._1).get)
 
   override def getMemberTransactions(cardId: String) = Future.successful(dummyMembers.get(cardId).toList.flatMap(_._2))
 }
