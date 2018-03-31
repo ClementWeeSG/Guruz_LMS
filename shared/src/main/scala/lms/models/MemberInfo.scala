@@ -1,5 +1,6 @@
 package lms.models
 
+import com.avsystem.commons.serialization.HasGenCodec
 import io.udash.properties.HasModelPropertyCreator
 import lms.api.LMSGlobal
 
@@ -28,7 +29,7 @@ object MemberInfoUtils {
 
 case class BookTransactionDetails(kind: String = "book", amountOfBooks: Option[Int] = None, fine: Option[Double] = None)
 
-object BookTransactionDetails extends HasModelPropertyCreator[BookTransactionDetails]
+object BookTransactionDetails extends HasGenCodec[BookTransactionDetails]
 
 case class MemberDetails(memberName: String = "", memberType: String = "", residencyType: String = "N/A", replacements: Option[Int] = None)
 
