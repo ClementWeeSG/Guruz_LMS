@@ -1,7 +1,8 @@
 package io.udash.demos.rest.views.index
 
-import io.udash._
+import io.udash.Presenter
 import io.udash.demos.rest.model.{Contact, ContactId, PhoneBookId, PhoneBookInfo}
+import io.udash.properties.model.ModelProperty
 import lms.routing.IndexState
 import org.scalajs.dom
 
