@@ -28,10 +28,6 @@ case class MemberInfoState(card: Option[String]) extends FinalRoutingState(Some(
 
 case class ItemTypeInfoState(itemType: Option[String]) extends FinalRoutingState(Some(RootState))
 
-case object RankingState extends ContainerRoutingState(Some(RootState))
-
-case class ItemPopularityState(itemType: Option[String]) extends FinalRoutingState(Some(RankingState))
-
-case class ReaderOfTheYearState(year: String, library: Option[String]) extends FinalRoutingState(Some(RankingState))
+case object ItemPopularityState extends FinalRoutingState(Some(RootState))
 
 case class PlaceHolderRoute(url: String) extends FinalRoutingState(Some(RootState))
