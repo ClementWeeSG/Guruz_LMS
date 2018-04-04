@@ -1,6 +1,6 @@
 package lms.views.memberinfo
 
-import io.udash.FinalView
+import io.udash._
 import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.form.{UdashForm, UdashInputGroup}
 import io.udash.css.CssView
@@ -21,7 +21,7 @@ class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with 
   val transactionsData = ModelProperty(new DataLoadingModel[BookTransactionDetails]())
 
   presenter.selectedCard.listen {
-    cardId => ApplicationContext.applicationInstance.goTo(MemberInfoState(Option(cardId)))
+    cardId => ApplicationContext.applicationInstance.goTo(MemberInfoState(Option(cardId).filter(_.nonEmpty)))
   }
 
   override def getTemplate: Modifier = frag(
@@ -33,7 +33,7 @@ class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with 
   private def layoutRow(modifiers: Modifier*): JsDom.TypedTag[Div] = div(BootstrapStyles.row)(modifiers)
 
   private def MemberSelector = {
-    val dropdown = UdashForm.select(presenter.selectedCard, presenter.members.get)
+    val dropdown: JsDom.all.Modifier = UdashForm.select(presenter.selectedCard, presenter.members.get)
     UdashForm.inline(
       UdashForm.group(
         UdashInputGroup.addon("Find Card Id: "),
