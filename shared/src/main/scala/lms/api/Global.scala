@@ -1,5 +1,7 @@
 package lms.api
 
+import lms.MainServerREST
+
 import scala.scalajs.js
 
 @js.native
@@ -14,5 +16,7 @@ trait LMSAPI extends js.Object {
 }
 
 object LMSGlobal {
-  val memberAPI: MemberInfoAPI = if (Global.lms.debug) DummyMemberInfoAPI else RemoteMemberInfoAPI
+  private lazy val server = MainServerREST.instance
+  val memberAPI: MemberInfoAPI = if (Global.lms.debug) DummyMemberInfoAPI else server.members()
+  val itemPopularityAPI = if (Global.lms.debug) DummyItemPopularityAPI else server.popularity()
 }
