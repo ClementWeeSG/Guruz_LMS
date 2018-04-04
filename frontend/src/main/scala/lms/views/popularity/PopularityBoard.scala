@@ -7,6 +7,10 @@ import lms.models.ItemPopularity
 import lms.views.DataTable
 import scalatags.JsDom.all._
 
+object PopularityBoard {
+  def apply(popularityModel: ModelProperty[DataLoadingModel[ItemPopularity]]) = new PopularityBoard(popularityModel).render
+}
+
 class PopularityBoard(popularityModel: ModelProperty[DataLoadingModel[ItemPopularity]]) extends CssView {
   val orderedPopularity = popularityModel.transform { unordered =>
     val orderedElems = unordered.elements.sortBy(_.score * (-1)).zipWithIndex

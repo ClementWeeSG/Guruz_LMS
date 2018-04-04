@@ -7,7 +7,9 @@ class DataLoadingModel[T](
                            val loadingText: String = "Loading ...",
                            val elements: Seq[T] = Seq.empty,
                            val error: Boolean = false
-                         )
+                         ) {
+  def reset() = new DataLoadingModel[T]()
+}
 
 object DataLoadingModel {
   implicit def modelPropertyCreator[T: PropertyCreator]: ModelPropertyCreator[DataLoadingModel[T]] =
