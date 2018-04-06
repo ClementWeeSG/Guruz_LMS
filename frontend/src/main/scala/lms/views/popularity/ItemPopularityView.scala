@@ -11,6 +11,8 @@ import scalatags.generic.Modifier
 
 class ItemPopularityView(val presenter: ItemPopularityPagePresenter) extends FinalView with CssView {
 
+  import scala.concurrent.ExecutionContext.Implicits.global
+
   presenter.setUp()
 
   override def getTemplate: Modifier[Element] = div(BootstrapStyles.containerFluid)(

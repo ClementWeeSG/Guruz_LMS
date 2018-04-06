@@ -5,10 +5,8 @@ import io.udash.bootstrap.BootstrapStyles
 import io.udash.bootstrap.form.{UdashForm, UdashInputGroup}
 import io.udash.css.CssView
 import io.udash.properties.model.ModelProperty
-import io.udash.properties.seq.SeqProperty
-import io.udash.properties.single.CastableProperty
 import lms.ApplicationContext
-import lms.models.{BookTransactionDetails, DataLoadingModel, MemberDetails}
+import lms.models._
 import lms.routing.MemberInfoState
 import org.scalajs.dom.html.Div
 import scalatags.JsDom
@@ -16,8 +14,8 @@ import scalatags.JsDom.all._
 
 class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with CssView {
 
-  val details: ModelProperty[MemberDetails] = presenter.info.subModel(_.memberDetails)
-  val transactions: SeqProperty[BookTransactionDetails, CastableProperty[BookTransactionDetails]] = presenter.info.subSeq(_.transactions)
+  val details = presenter.info.subModel(_.memberDetails)
+  val transactions = presenter.info.subSeq(_.transactions)
   val transactionsData = ModelProperty(new DataLoadingModel[BookTransactionDetails]())
 
   presenter.selectedCard.listen {
@@ -27,13 +25,13 @@ class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with 
   override def getTemplate: Modifier = frag(
     layoutRow(MemberSelector),
     layoutRow(MemberDetailsPanel(details)),
-    layoutRow()
+    layoutRow(MemberTransactions(transactionsData))
   )
 
   private def layoutRow(modifiers: Modifier*): JsDom.TypedTag[Div] = div(BootstrapStyles.row)(modifiers)
 
   private def MemberSelector = {
-    val dropdown: JsDom.all.Modifier = UdashForm.select(presenter.selectedCard, presenter.members.get)
+    //val dropdown: JsDom.all.Modifier = UdashForm.select(presenter.selectedCard, presenter.members.get)
     UdashForm.inline(
       UdashForm.group(
         UdashInputGroup.addon("Find Card Id: "),

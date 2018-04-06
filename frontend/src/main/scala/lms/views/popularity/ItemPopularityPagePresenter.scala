@@ -5,7 +5,7 @@ import lms.api.LMSGlobal
 import lms.models.{DataLoadingModel, ItemPopularity}
 import lms.routing.ItemPopularityState
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] with ViewFactory[ItemPopularityState.type] {
@@ -24,7 +24,7 @@ class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] wi
     }
   }
 
-  def setUp(): Unit = {
+  def setUp()(implicit executionContext: ExecutionContext): Unit = {
     startDate.listen(start => reloadTable(start))
     endDate.listen(end => reloadTable(end = end))
     startDate.addValidator(DateValidator)
@@ -62,7 +62,7 @@ class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] wi
     popularItems.subSeq(_.elements).clear()
   }
 
-  def reloadTable(start: String = startDate.get, end: String = endDate.get): Unit = {
+  def reloadTable(start: String = startDate.get, end: String = endDate.get)(implicit executionContext: ExecutionContext): Unit = {
     resetLoadingModel()
     LMSGlobal.itemPopularityAPI.getTop3Books(startDate.get, end).onComplete {
       case Success(items) => successfullyLoad(items)

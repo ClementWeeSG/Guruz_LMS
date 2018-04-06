@@ -1,7 +1,7 @@
 package lms.api
 
-import io.udash.rest.{GET, REST, RESTName, URLPart}
-import lms.models.ItemInfo
+import io.udash.rest._
+import lms.models.LibraryItemInfo
 
 import scala.concurrent.Future
 
@@ -13,11 +13,11 @@ trait ItemTypeInfoAPI {
 
   @GET
   @RESTName("series-items")
-  def items(@URLPart itemType: String): Future[List[ItemInfo]]
+  def items(@URLPart itemType: String): Future[Seq[LibraryItemInfo]]
 }
 
 object DummyItemTypeInfoAPI extends ItemTypeInfoAPI {
   override def types(): Future[List[String]] = Future.successful(List("Audio", "Book", "Video", "Magazine"))
 
-  override def items(itemType: String): Future[List[ItemInfo]] = Future.successful(List.empty)
+  override def items(itemType: String): Future[Seq[LibraryItemInfo]] = Future.successful(List.empty)
 }

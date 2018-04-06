@@ -2,32 +2,12 @@ package lms.models
 
 import com.avsystem.commons.serialization.HasGenCodec
 import io.udash.properties.HasModelPropertyCreator
-import lms.api.LMSGlobal
 
-import scala.concurrent.ExecutionContext.Implicits._
-import scala.concurrent.Future
-
-case class MemberInfo(memberDetails: MemberDetails = MemberDetails(), transactions: List[BookTransactionDetails] = List.empty)
+case class MemberInfo(memberDetails: MemberDetails = MemberDetails(), transactions: Seq[BookTransactionDetails] = List.empty)
 
 object MemberInfo extends HasModelPropertyCreator[MemberInfo]
 
-object MemberInfoUtils {
-  def getInfo(card: String): Future[Option[MemberInfo]] = {
-    LMSGlobal.memberAPI.getMemberDetails(card).flatMap {
-      case Some(details) =>
-        LMSGlobal.memberAPI.getMemberTransactions(card).map {
-          transactions => Some(MemberInfo(details, transactions))
-        } recover {
-          case _: Throwable => Some(MemberInfo(details))
-        }
-      case None => Future.successful(None)
-    }
-  }
-
-  def getCards(): Future[List[String]] = LMSGlobal.memberAPI.selectCardNos()
-}
-
-case class BookTransactionDetails(kind: String = "book", amountOfBooks: Option[Int] = None, fine: Option[Double] = None)
+case class BookTransactionDetails(kind: String, amountOfBooks: Option[Int], fine: Option[Double])
 
 object BookTransactionDetails extends HasGenCodec[BookTransactionDetails]
 

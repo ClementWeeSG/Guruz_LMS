@@ -1,9 +1,9 @@
 package lms.api
 
-import lms.models.{BookTransactionDetails, MemberDetails}
 import io.udash.rest._
-import lms.MainServerREST
+import lms.models.{BookTransactionDetails, MemberDetails}
 
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 @REST
@@ -35,12 +35,4 @@ object DummyMemberInfoAPI extends MemberInfoAPI {
 }
 
 
-object RemoteMemberInfoAPI extends MemberInfoAPI {
-  private lazy val api = MainServerREST.instance.members()
 
-  override def selectCardNos() = api.selectCardNos()
-
-  override def getMemberDetails(cardId: String) = api.getMemberDetails(cardId)
-
-  override def getMemberTransactions(cardId: String) = api.getMemberTransactions(cardId)
-}

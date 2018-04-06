@@ -15,7 +15,7 @@ import scala.util.{Failure, Success}
 
 class ItemInfoPagePresenter extends Presenter[ItemTypeInfoState] with ViewFactory[ItemTypeInfoState] {
 
-  val info: ModelProperty[DataLoadingModel[ItemInfo]] = ModelProperty(new DataLoadingModel[ItemInfo]())
+  val info: ModelProperty[DataLoadingModel[LibraryItemInfo]] = ModelProperty(new DataLoadingModel[LibraryItemInfo]())
   val categories = SeqProperty.empty[String]
   val selectedCategory = Property.empty[String]
 
@@ -39,22 +39,7 @@ class ItemInfoPagePresenter extends Presenter[ItemTypeInfoState] with ViewFactor
         loadItemDetails(LMSGlobal.itemsAPI.items(category))
     }
 
-    def loadMemberDetails(loadingModel: ModelProperty[SingleLoadingModel[MemberDetails]], target: Future[MemberDetails])(callback: MemberDetails => Unit): Unit = {
-      loadingModel.subProp(_.loaded).set(false)
-      loadingModel.subProp(_.loadingText).set("Loading ...")
-
-      target onComplete {
-        case Success(elem) =>
-          loadingModel.subProp(_.loaded).set(true)
-          loadingModel.subProp(_.item).set(elem)
-          callback(elem)
-        case Failure(ex) =>
-          loadingModel.subProp(_.loadingText).set(s"Error: $ex")
-      }
-
-    }
-
-    def loadItemDetails(elements: Future[Seq[ItemInfo]]): Unit = {
+    def loadItemDetails(elements: Future[Seq[LibraryItemInfo]]): Unit = {
       info.subProp(_.loaded).set(false)
       info.subProp(_.loadingText).set("Loading ...")
 
