@@ -8,7 +8,7 @@ import lms.routing.ItemPopularityState
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] {
+class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] with ViewFactory[ItemPopularityState.type] {
   val popularItems = ModelProperty(new DataLoadingModel[ItemPopularity]())
   val startDate: CastableProperty[String] = Property[String]("")
   val endDate: CastableProperty[String] = Property[String]("")
@@ -75,4 +75,5 @@ class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] {
     endDate.set("")
   }
 
+  override def create(): (View, Presenter[ItemPopularityState.type]) = (new ItemPopularityView(this), this)
 }

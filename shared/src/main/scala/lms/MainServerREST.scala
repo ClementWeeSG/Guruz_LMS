@@ -1,7 +1,7 @@
 package lms
 
-import io.udash.rest.{DefaultServerREST, Protocol, REST, RESTName}
-import lms.api.{ItemPopularityAPI, MemberInfoAPI}
+import io.udash.rest._
+import lms.api.{ItemPopularityAPI, ItemTypeInfoAPI, MemberInfoAPI}
 import org.scalajs.dom
 
 import scala.util.Try
@@ -10,10 +10,11 @@ import scala.util.Try
 trait MainServerREST {
   @RESTName("members")
   def members(): MemberInfoAPI
-
   @RESTName("item-popularity")
   def popularity(): ItemPopularityAPI
 
+  @SkipRESTName
+  def series(): ItemTypeInfoAPI
 }
 
 object MainServerREST {
