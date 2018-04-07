@@ -1,9 +1,6 @@
 package lms.routing
 
-import io.udash._
-import io.udash.demos.rest.model.{ContactId, PhoneBookId}
-
-import scala.util.Try
+import io.udash.{RoutingRegistry, _}
 
 class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
   def matchUrl(url: Url): RoutingState =

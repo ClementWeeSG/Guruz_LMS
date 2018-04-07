@@ -3,7 +3,7 @@ package io.udash.demos.rest
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
-import io.udash.demos.rest.api.PhoneBookWebService
+import io.udash.demos.rest.api.{PhoneBookWebServiceSpec}
 import io.udash.logging.CrossLogging
 
 import scala.io.StdIn
@@ -15,7 +15,7 @@ object Launcher extends CrossLogging {
     // needed for the future flatMap/onComplete in the end
     implicit val executionContext = system.dispatcher
 
-    val service = new PhoneBookWebService
+    val service = PhoneBookWebServiceSpec
     val bindingFuture = Http().bindAndHandle(service.route, "localhost", 8080)
 
     logger.info(s"Server online at http://localhost:8080/\nPress Enter to stop...")
