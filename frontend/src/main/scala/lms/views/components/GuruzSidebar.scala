@@ -34,7 +34,7 @@ object GuruzSidebar extends CssView {
     li(
       GuruzSidebarStyles.SidebarActive.styleIf(currentUrl.startsWith(linkUrl))
     )(a(
-      href := "/" + item.destinationState.url
+      href := item.destinationState.url
     )(span(iconOf(item), item.tag))).render
   }
 

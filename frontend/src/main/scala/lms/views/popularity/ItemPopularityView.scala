@@ -11,21 +11,17 @@ import scalatags.generic.Modifier
 
 class ItemPopularityView(val presenter: ItemPopularityPagePresenter) extends FinalView with CssView {
 
-  import scala.concurrent.ExecutionContext.Implicits.global
-
-  presenter.setUp()
-
   override def getTemplate: Modifier[Element] = div(BootstrapStyles.containerFluid)(
     dateSelector,
-    div(BootstrapStyles.row)(PopularityBoard(presenter.popularItems))
+    div(BootstrapStyles.row)(PopularityBoard(presenter.popularItemsLoadingModel))
   )
 
   private def dateSelector = {
     div(BootstrapStyles.row)(
       UdashInputGroup()(
-        UdashInputGroup.addon("From"),
+        UdashInputGroup.addon("Date From"),
         UdashInputGroup.input(TextInput.debounced(presenter.startDate).render),
-        UdashInputGroup.addon("to"),
+        UdashInputGroup.addon("Date To"),
         UdashInputGroup.input(TextInput.debounced(presenter.endDate).render)
       ).render
     ).render

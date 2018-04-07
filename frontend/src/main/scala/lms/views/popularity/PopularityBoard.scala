@@ -12,18 +12,29 @@ object PopularityBoard {
 }
 
 class PopularityBoard(popularityModel: ModelProperty[DataLoadingModel[ItemPopularity]]) extends CssView {
-  val orderedPopularity = popularityModel.transform { unordered =>
-    val orderedElems = unordered.elements.sortBy(_.score * (-1)).zipWithIndex
-    new DataLoadingModel[(ItemPopularity, Int)](unordered.loaded, unordered.loadingText, orderedElems, unordered.error)
+  val orderedPopularity = ModelProperty.empty[DataLoadingModel[(ItemPopularity, Int)]]
+
+  setup()
+
+  def setup(): Unit = {
+    popularityModel.listen { (dlm: DataLoadingModel[ItemPopularity]) =>
+      orderedPopularity.subProp(_.error).set(dlm.error)
+      val loadingStatus = dlm.loaded
+      orderedPopularity.subProp(_.loaded).set(loadingStatus)
+      orderedPopularity.subProp(_.loadingText).set(dlm.loadingText)
+      orderedPopularity.subProp(_.elements).set(dlm.elements.zipWithIndex)
+    }
+    println("Item Popularity: Popularity Board: Set up all listeners properly")
   }
 
+
   def render() = DataTable[(ItemPopularity, Int)](
-    ModelProperty(orderedPopularity.get),
+    orderedPopularity,
     Seq("Rank", "Item ID", "Item Title", "N1", "N2", "Score"),
     (prop) => {
       val data: (ItemPopularity, Int) = prop.get
       Seq(
-        "#" + data._2.toString,
+        "#" + (data._2 + 1).toString,
         data._1.itemId,
         data._1.itemTitle,
         data._1.n1.toString,

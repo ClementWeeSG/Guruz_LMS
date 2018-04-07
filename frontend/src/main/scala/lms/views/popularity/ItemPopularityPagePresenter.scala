@@ -9,24 +9,25 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] with ViewFactory[ItemPopularityState.type] {
-  val popularItems = ModelProperty(new DataLoadingModel[ItemPopularity]())
+  val popularItemsLoadingModel = ModelProperty(new DataLoadingModel[ItemPopularity]())
+  val popularItems = popularItemsLoadingModel.subSeq(_.elements)
   val startDate: CastableProperty[String] = Property[String]("")
   val endDate: CastableProperty[String] = Property[String]("")
+  val dateRange: ReadableProperty[(String, String)] = startDate.combine(endDate)((_, _))
 
   object DateValidator extends Validator[String] {
     val date = raw"(\d{4})-(\d{2})-(\d{2})".r
 
     override def apply(element: String): Future[ValidationResult] = Future.successful {
       element match {
+        case "" => Valid
         case date(_, _, _) => Valid
         case _ => Invalid("Date must be in yyyy-mm-dd format!!")
       }
     }
   }
 
-  def setUp()(implicit executionContext: ExecutionContext): Unit = {
-    startDate.listen(start => reloadTable(start))
-    endDate.listen(end => reloadTable(end = end))
+  def setup(): Unit = {
     startDate.addValidator(DateValidator)
     endDate.addValidator(DateValidator)
     setStart("1900-01-01")
@@ -42,28 +43,31 @@ class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] wi
   }
 
   def resetLoadingModel(): Unit = {
-    popularItems.subProp(_.loadingText).set("Loading...")
-    popularItems.subProp(_.loaded).set(false)
-    popularItems.subProp(_.error).set(false)
-    popularItems.subSeq(_.elements).clear()
+    popularItemsLoadingModel.subProp(_.loadingText).set("Loading...")
+    popularItemsLoadingModel.subProp(_.loaded).set(false)
+    popularItemsLoadingModel.subProp(_.error).set(false)
+    popularItemsLoadingModel.subSeq(_.elements).clear()
   }
 
   def successfullyLoad(items: List[ItemPopularity]): Unit = {
-    popularItems.subProp(_.loadingText).set("")
-    popularItems.subProp(_.loaded).set(true)
-    popularItems.subProp(_.error).set(false)
-    popularItems.subSeq(_.elements).append(items: _*)
+    popularItemsLoadingModel.subProp(_.loadingText).set("")
+    popularItemsLoadingModel.subProp(_.loaded).set(true)
+    popularItemsLoadingModel.subProp(_.error).set(false)
+    popularItemsLoadingModel.subSeq(_.elements).set(items)
+    println(s"Most Popular Items successfully loaded: ${popularItemsLoadingModel.get.elements}")
   }
 
   def handle(ex: Throwable): Unit = {
-    popularItems.subProp(_.loadingText).set(s"Error: $ex")
-    popularItems.subProp(_.loaded).set(false)
-    popularItems.subProp(_.error).set(true)
-    popularItems.subSeq(_.elements).clear()
+    popularItemsLoadingModel.subProp(_.loadingText).set(s"Error: $ex")
+    popularItemsLoadingModel.subProp(_.loaded).set(false)
+    popularItemsLoadingModel.subProp(_.error).set(true)
+    popularItemsLoadingModel.subSeq(_.elements).clear()
+    println(s"ItemPopularity: Encountered Error while loading: $ex")
   }
 
   def reloadTable(start: String = startDate.get, end: String = endDate.get)(implicit executionContext: ExecutionContext): Unit = {
     resetLoadingModel()
+    println("ItemPopularity: Reloading Data for Table...")
     LMSGlobal.itemPopularityAPI.getTop3Books(startDate.get, end).onComplete {
       case Success(items) => successfullyLoad(items)
       case Failure(ex) => handle(ex)
@@ -71,8 +75,16 @@ class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] wi
   }
 
   override def handleState(state: ItemPopularityState.type): Unit = {
+    import scala.concurrent.ExecutionContext.Implicits.global
     startDate.set("")
     endDate.set("")
+    println("ItemPopularity: Setting up Popularity View")
+    setup()
+    println("ItemPopularity: Initialized Popularity View Successfully")
+    reloadTable()
+    println("ItemPopularity: Data loaded successfully.")
+    dateRange.listen { case (start, end) => reloadTable(start, end) }
+    println("ItemPopularity: Set up listeners")
   }
 
   override def create(): (View, Presenter[ItemPopularityState.type]) = (new ItemPopularityView(this), this)

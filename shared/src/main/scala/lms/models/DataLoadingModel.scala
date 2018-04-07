@@ -9,6 +9,15 @@ class DataLoadingModel[T](
                            val error: Boolean = false
                          ) {
   def reset() = new DataLoadingModel[T]()
+
+  def transformElems[U](change: T => U): DataLoadingModel[U] = {
+    val newContents = elements.map(change)
+    new DataLoadingModel[U](loaded = loaded, loadingText = loadingText, elements = newContents, error = error)
+  }
+
+  def transformSeq[U](change: Seq[T] => Seq[U]) = {
+    new DataLoadingModel[U](loaded = loaded, loadingText = loadingText, elements = change(elements), error = error)
+  }
 }
 
 object DataLoadingModel {

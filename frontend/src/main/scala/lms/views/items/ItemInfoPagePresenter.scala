@@ -23,6 +23,7 @@ class ItemInfoPagePresenter extends Presenter[ItemTypeInfoState] with ViewFactor
     types =>
       categories.clear()
       categories.set(types)
+      println(s"Finished loading types: [$types]")
   } recover {
     case t: Throwable =>
       categories.append("<ERROR>")

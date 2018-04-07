@@ -14,9 +14,10 @@ object DataTable {
 
 class DataTable[T: PropertyCreator](model: ModelProperty[DataLoadingModel[T]], headers: Seq[String], tableElementsFactory: CastableProperty[T] => Seq[Modifier]) extends CssView {
   def render(): Modifier = {
-    produce(model.subProp(_.loaded)) { loaded =>
-      val isError = model.subProp(_.error).get
-      if (loaded && !isError) {
+    val loadSuccess: ReadableProperty[Boolean] = model.subProp(_.loaded).combine(model.subProp(_.error).transform(b => !b))(_ && _)
+    produce(loadSuccess) { loaded =>
+      println(s"Item Popularity is loaded: $loaded")
+      if (loaded) {
         UdashTable(hover = Property(true))(model.subSeq(_.elements))(
           rowFactory = (p) => tr(tableElementsFactory(p).map(name => td(name))).render,
           headerFactory = Some(() => tr(headers.map((name) => th(name))).render)

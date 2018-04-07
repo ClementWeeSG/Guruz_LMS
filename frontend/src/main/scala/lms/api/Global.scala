@@ -25,6 +25,8 @@ object LMSGlobal {
 
   private val isDebug = Global.lms.flatMap(_.debug).getOrElse(true)
 
+  if (isDebug) println("Running in Debug Mode") else println("Running in Live mode")
+
   lazy val server = DefaultServerREST[MainServerREST](
     Protocol.Http, dom.window.location.hostname, Try(dom.window.location.port.toInt).getOrElse(80), "/api/"
   )
