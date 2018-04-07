@@ -18,7 +18,7 @@ object DataList {
 
 class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], headers: Seq[String], rowFactory: CastableProperty[T] => Seq[ReadableProperty[String]]) extends CssView {
   def render(): Modifier = {
-    val displayProperty = model.subProp(_.item)
+    val displayProperty = model.subProp(_.item).asInstanceOf[CastableProperty[T]]
     val rowValues = rowFactory(displayProperty)
     produce(model.subProp(_.loaded)) { loaded =>
       val isError = model.subProp(_.error).get
@@ -30,7 +30,7 @@ class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], 
 
   private def compileDetailsRows(headers: Seq[String], values: Seq[ReadableProperty[String]]): Seq[DataList.DetailsRow] = {
     headers.zip(values) map {
-      case (header, value: _root_.io.udash.CastableProperty[String]) => DataList.DetailsRow(header, value)
+      case (header, value) => DataList.DetailsRow(header, value)
     }
   }
 
