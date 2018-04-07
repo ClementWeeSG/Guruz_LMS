@@ -23,7 +23,7 @@ trait LMSAPI extends js.Object {
 object LMSGlobal {
   import scala.concurrent.ExecutionContext.Implicits.global
 
-  private val isDebug = Global.lms.flatMap(_.debug).getOrElse(true)
+  private val isDebug = Global.lms.flatMap(_.debug).getOrElse(false)
 
   if (isDebug) println("Running in Debug Mode") else println("Running in Live mode")
 
