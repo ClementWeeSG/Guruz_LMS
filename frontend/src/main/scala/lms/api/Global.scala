@@ -12,21 +12,23 @@ import scala.util.Try
 @js.native
 @js.annotation.JSGlobalScope
 object Global extends js.Object {
-  def lms: LMSAPI = js.native
+  def lms: js.UndefOr[LMSAPI] = js.native
 }
 
 @js.native
 trait LMSAPI extends js.Object {
-  def debug: Boolean = js.native
+  def debug: js.UndefOr[Boolean] = js.native
 }
 
 object LMSGlobal {
   import scala.concurrent.ExecutionContext.Implicits.global
 
+  private val isDebug = Global.lms.flatMap(_.debug).getOrElse(true)
+
   lazy val server = DefaultServerREST[MainServerREST](
     Protocol.Http, dom.window.location.hostname, Try(dom.window.location.port.toInt).getOrElse(80), "/api/"
   )
-  val memberAPI: MemberInfoAPI = if (Global.lms.debug) DummyMemberInfoAPI else server.members()
-  val itemPopularityAPI = if (Global.lms.debug) DummyItemPopularityAPI else server.popularity()
-  val itemsAPI = if (Global.lms.debug) DummyItemTypeInfoAPI else server.series()
+  val memberAPI: MemberInfoAPI = if (isDebug) DummyMemberInfoAPI else server.members()
+  val itemPopularityAPI = if (isDebug) DummyItemPopularityAPI else server.popularity()
+  val itemsAPI = if (isDebug) DummyItemTypeInfoAPI else server.series()
 }
