@@ -1,6 +1,6 @@
 package lms.views.memberinfo
 
-import io.udash.Presenter
+import io.udash._
 import io.udash.core.{View, ViewFactory}
 import io.udash.properties.model.ModelProperty
 import io.udash.properties.seq.SeqProperty
@@ -13,9 +13,9 @@ import scala.concurrent.ExecutionContext.Implicits._
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactory[MemberInfoState] {
+class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactory[MemberInfoState] with MemberInfoCreation {
 
-  val info: ModelProperty[MemberInfo] = ModelProperty(MemberInfo())
+  val info: ModelProperty[MemberInfo] = ModelProperty.empty[MemberInfo]
   val members = SeqProperty.empty[String]
   val selectedCard = Property.empty[String]
 
@@ -34,7 +34,7 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
         info.subModel(_.memberDetails).subProp(_.memberName).set("<ERROR>")
       case Some(card) =>
         val loadingModel1 = ModelProperty.empty[SingleLoadingModel[MemberDetails]]
-        loadingModel1.set(new SingleLoadingModel[MemberDetails](item = MemberDetails()))
+        loadingModel1.set(new SingleLoadingModel[MemberDetails](item = MemberDetails("", "", "N/A", 0)))
         loadMemberDetails(loadingModel1, LMSGlobal.memberAPI.getMemberDetails(card)) { _ =>
           val loadingModel2 = ModelProperty.empty[DataLoadingModel[BookTransactionDetails]]
           loadingModel2.set(new DataLoadingModel[BookTransactionDetails])

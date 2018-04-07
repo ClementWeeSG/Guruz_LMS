@@ -12,7 +12,7 @@ import org.scalajs.dom.html.Div
 import scalatags.JsDom
 import scalatags.JsDom.all._
 
-class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with CssView {
+class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with CssView with MemberInfoCreation {
 
   val details = presenter.info.subModel(_.memberDetails)
   val transactions = presenter.info.subSeq(_.transactions)
