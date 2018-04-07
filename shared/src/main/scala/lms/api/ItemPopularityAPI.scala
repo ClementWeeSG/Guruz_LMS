@@ -9,13 +9,13 @@ import scala.concurrent.Future
 trait ItemPopularityAPI {
   @GET
   @SkipRESTName()
-  def getTop3Books(start: String, end: String): Future[List[ItemPopularity]]
+  def getTop3Books(@Query start: String, @Query end: String): Future[List[ItemPopularity]]
 }
 
 object DummyItemPopularityAPI extends ItemPopularityAPI {
   override def getTop3Books(start: String = "", end: String = ""): Future[List[ItemPopularity]] = Future.successful(List(
-    ItemPopularity("789345", "Harry Potter and the Dark Legacy", 32, 25),
-    ItemPopularity("9084ddfdfdfdfdr", "Ready Player One", 24, 30),
-    ItemPopularity("904888jkl3455", "Beyond Fury: My Time In The Trump White House", 15, 9)
+    ItemPopularity("789345", "Harry Potter and the Dark Legacy", 32, 25, 57, 1),
+    ItemPopularity("9084ddfdfdfdfdr", "Ready Player One", 24, 30, 54, 2),
+    ItemPopularity("904888jkl3455", "Beyond Fury: My Time In The Trump White House", 15, 9, 24, 3)
   ))
 }
