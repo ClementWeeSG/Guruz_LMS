@@ -12,6 +12,7 @@ import scalatags.generic.Modifier
 class ItemPopularityView(val presenter: ItemPopularityPagePresenter) extends FinalView with CssView {
 
   override def getTemplate: Modifier[Element] = div(BootstrapStyles.containerFluid)(
+    div(BootstrapStyles.row)(h3("Top Items Borrowed This Year")),
     dateSelector,
     div(BootstrapStyles.row)(PopularityBoard(presenter.popularItemsLoadingModel))
   )
