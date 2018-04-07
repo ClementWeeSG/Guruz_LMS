@@ -24,12 +24,14 @@ class ItemInfoView(presenter: ItemInfoPagePresenter) extends FinalView with CssV
   private def layoutRow(modifiers: Modifier*): JsDom.TypedTag[Div] = div(BootstrapStyles.row)(modifiers)
 
   private def selector = {
-    val dropdown: JsDom.all.Modifier = UdashForm.select(presenter.selectedCategory, presenter.categories.get)
-    UdashForm.inline(
-      UdashForm.group(
-        UdashInputGroup.addon("Find Card Id: "),
-        dropdown
-      )
-    ).render
+    produce(presenter.categories){cats =>
+      UdashForm.inline(
+        UdashInputGroup()(
+          UdashInputGroup.addon("Find Item Type: "),
+          UdashForm.select(presenter.selectedCategory, cats)
+        ).render
+      ).render
+    }
+
   }
 }
