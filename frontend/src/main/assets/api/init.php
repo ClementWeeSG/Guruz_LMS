@@ -17,43 +17,27 @@ Flight::map("closeDB", function(){
 
 Flight::map("queryRow", function($tags, $prepare){
 	Flight::openDB();
+	$result=array();
 	$stmt = $prepare(Flight::get("conn"));
 	mysqli_stmt_execute($stmt);
-	$meta = mysqli_stmt_result_metadata($stmt); 
-    while ($field = $meta->fetch_field()) 
-    { 
-        $params[] = &$row[$field->name]; 
-    } 
-
-    call_user_func_array("mysqli_stmt_bind_result", $params); 
-
-    if (mysqli_stmt_fetch($stmt)) {
-		$c = array_combine($tags, array_values($row));
-        $result[] = $c; 
+	$db_result = mysqli_stmt_get_result($stmt);
+	$row = mysqli_fetch_assoc($db_result);
+    if($row)
+    {
+        $result = array_combine($tags, array_values($row));
     }
 	Flight::closeDB();
 	Flight::json($result);
 });
 
-Flight::map("queryTable", function($tags, $prepare){
+Flight::map("queryTable", function($prepare){
 	Flight::openDB();
-	$result = array();
 	$stmt = $prepare(Flight::get("conn"));
 	mysqli_stmt_execute($stmt);
-	$meta = mysqli_stmt_result_metadata($stmt); 
-    while ($field = $meta->fetch_field()) 
-    { 
-        $params[] = &$row[$field->name]; 
-    } 
-
-    call_user_func_array("mysqli_stmt_bind_result", $params); 
-
-    while (mysqli_stmt_fetch($stmt)) { 
-        $c = array_combine($tags, array_values($row));
-        $result[] = $c; 
-    }
+	$db_result = mysqli_stmt_get_result($stmt);
+	$rows = mysqli_fetch_all($db_result, MYSQLI_ASSOC);
 	Flight::closeDB();
-	Flight::json($result);
+	Flight::json($rows);
 });
 
 Flight::map("queryArray", function($prepare){
