@@ -22,7 +22,7 @@ class ItemInfoPagePresenter extends Presenter[ItemTypeInfoState] with ViewFactor
   LMSGlobal.itemsAPI.types().map {
     types =>
       categories.clear()
-      categories.set(types)
+      categories.set("" :: types)
       println(s"Finished loading types: [$types]")
   } recover {
     case t: Throwable =>
