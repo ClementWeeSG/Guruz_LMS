@@ -12,13 +12,15 @@ object MemberTransactions {
 class MemberTransactions(transactions: ModelProperty[DataLoadingModel[BookTransactionDetails]]) {
   def render() = DataTable[BookTransactionDetails](
     transactions,
-    Seq("Transaction Type", "Number Of Books", "Fine Owed"),
+    Seq("Date", "Transaction Type", "Number of Books Borrowed", "Number of Books Renewed", "Fine Paid"),
     (prop) => {
       val data = prop.get
       Seq(
+        data.dateTime,
         data.kind,
-        data.amountOfBooks.getOrElse(0).toString,
-        data.fine.getOrElse(0.00).toString
+        data.numLent.toString,
+        data.numRenewed.toString,
+        data.fine.toString
       )
     }
   )

@@ -23,7 +23,7 @@ class MemberDetailsPanel(detailsModel: ModelProperty[MemberDetails]) extends Css
       UdashPanel.body(
         DataList[MemberDetails](
           ModelProperty.apply(new SingleLoadingModel[MemberDetails](item = MemberDetails("", "", "N/A", 0))),
-          Seq("Member Name", "Membership Package", "Residency Type", "Number of Card Replacements"),
+          Seq("Member Name", "Membership Type", "Residency Type", "Total Times Card Replaced"),
           prop => getDetailValues(prop.asModel)
         )
       )

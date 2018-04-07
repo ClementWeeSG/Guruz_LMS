@@ -7,7 +7,7 @@ case class MemberInfo(memberDetails: MemberDetails = MemberDetails("", "", "N/A"
 
 object MemberInfo extends HasModelPropertyCreator[MemberInfo]
 
-case class BookTransactionDetails(kind: String, amountOfBooks: Option[Int], fine: Option[Double])
+case class BookTransactionDetails(dateTime: String, kind: String, numLent: Int, numRenewed: Int, fine: Double)
 
 object BookTransactionDetails extends HasGenCodec[BookTransactionDetails]
 
