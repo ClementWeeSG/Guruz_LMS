@@ -14,23 +14,21 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
 
   private val url2State: PartialFunction[String, RoutingState] = {
     case "" => IndexState
-    case "/contact" => ContactFormState()
-    case "/contact" / arg => ContactFormState(Try(ContactId(arg.toInt)).toOption)
-    case "/book" => PhoneBookFormState()
-    case "/book" / arg => PhoneBookFormState(Try(PhoneBookId(arg.toInt)).toOption)
     case "/members" => MemberInfoState(None)
     case "/members" / card => MemberInfoState(Some(card))
+    case "/popularity" => ItemPopularityState
+    case "/series" => ItemTypeInfoState(None)
+    case "/series" / category => ItemTypeInfoState(Some(category))
     case _ => ErrorState
   }
 
   private val state2Url: PartialFunction[RoutingState, String] = {
     case IndexState => ""
-    case ContactFormState(None) => "/contact"
-    case ContactFormState(Some(ContactId(id))) => s"/contact/$id"
-    case PhoneBookFormState(None) => "/book"
-    case PhoneBookFormState(Some(PhoneBookId(id))) => s"/book/$id"
     case MemberInfoState(None) => "/members"
     case MemberInfoState(Some(card)) => s"/members/$card"
+    case ItemPopularityState => "/popularity"
+    case ItemTypeInfoState(Some(cat)) => s"/series/$cat"
+    case ItemTypeInfoState(None) => s"/series"
     case _ => "/error"
   }
 }
