@@ -139,9 +139,17 @@ Flight::route('GET /item-types', function(){
 	});
 });
 
-Flight::route('GET /series/@item', function($item){
-	Flight::queryArray(function($conn){
-		return mysqli_prepare($conn, "select `Name` from g1t06.item_type");
+Flight::route('GET /series/@kind', function($kind){
+	Flight::queryTable(function ($conn) use ($kind){
+		$q = "SELECT Series_Title AS series, Title AS title,  Series_Order AS `order`, count(distinct Lib_Name) AS numLibs FROM g1t06.item it, g1t06.library_copies lc
+where Series_Title is not null
+and it.Item_ID=lc.Item_ID
+and it.Item_Type= ?
+group by Series_Title, Series_Order, Title
+order by Series_Title asc, Series_Order asc";
+	$stmt = mysqli_prepare($conn, $q);
+	mysqli_stmt_bind_param($stmt, "s", $kind);
+	return $stmt;
 	});
 });
 
