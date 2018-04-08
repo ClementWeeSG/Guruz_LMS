@@ -17,6 +17,7 @@ class ItemInfoView(presenter: ItemInfoPagePresenter) extends FinalView with CssV
   }
 
   override def getTemplate: Modifier = frag(
+    layoutRow(h3("Search for Items by Type")),
     layoutRow(selector),
     layoutRow(ItemDetails(presenter.info))
   )
