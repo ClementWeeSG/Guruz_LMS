@@ -11,12 +11,12 @@ import lms.models._
 import lms.routing.MemberInfoState
 
 import scala.concurrent.ExecutionContext.Implicits._
-//import scala.concurrent.Future
-//import scala.util.{Failure, Success}
+import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactory[MemberInfoState] with MemberInfoCreation {
 
-  val info: ModelProperty[MemberInfo] = ModelProperty.empty[MemberInfo]
+  val transactions = ModelProperty(new DataLoadingModel[BookTransactionDetails]())
   val members = SeqProperty.empty[String]
   val selectedCard = Property.empty[String]
 
@@ -37,6 +37,7 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
       //info.subModel(_.memberDetails).subProp(_.memberName).set("<ERROR>")
       case Some(card) =>
         selectedCard.set(card)
+        loadTransactions(transactions, LMSGlobal.memberAPI.getMemberTransactions(card))
 
       /**
         * val loadingModel1 = ModelProperty.empty[SingleLoadingModel[MemberDetails]]
@@ -63,6 +64,7 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
     }
 
   }
+  */
 
   def loadTransactions(loadingModel: ModelProperty[DataLoadingModel[BookTransactionDetails]], elements: Future[Seq[BookTransactionDetails]]): Unit = {
     loadingModel.subProp(_.loaded).set(false)
@@ -72,16 +74,13 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
       case Success(elems) =>
         loadingModel.subProp(_.loaded).set(true)
         loadingModel.subSeq(_.elements).clear()
-
-        elems.foreach { el =>
-          loadingModel.subSeq(_.elements).append(el)
-        }
+        loadingModel.subSeq(_.elements).set(elems)
       case Failure(ex) =>
         loadingModel.subProp(_.error).set(true)
         loadingModel.subProp(_.loadingText).set(s"Error: $ex")
     }
   }
-}*/
+
 
   def createView() = new MemberInfoView(this)
 

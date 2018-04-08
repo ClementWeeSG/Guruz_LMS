@@ -23,9 +23,9 @@ class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with 
   }
 
   override def getTemplate: Modifier = frag(
-    layoutRow(MemberSelector) //,
+    layoutRow(MemberSelector),
     //layoutRow(MemberDetailsPanel(details)),
-    //layoutRow(MemberTransactions(transactionsData))
+    layoutRow(MemberTransactions(presenter.transactions))
   )
 
   private def layoutRow(modifiers: Modifier*): JsDom.TypedTag[Div] = div(BootstrapStyles.row)(modifiers)
