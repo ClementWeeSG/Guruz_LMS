@@ -4,6 +4,7 @@ import io.udash._
 import io.udash.bootstrap.table.UdashTable
 import io.udash.css.CssView
 import io.udash.properties.PropertyCreator
+import io.udash.properties.model.ModelProperty
 import lms.models.DataLoadingModel
 import scalatags.JsDom.all._
 
@@ -16,7 +17,7 @@ class DataTable[T: PropertyCreator](model: ModelProperty[DataLoadingModel[T]], h
   def render(): Modifier = {
     val loadSuccess: ReadableProperty[Boolean] = model.subProp(_.loaded).combine(model.subProp(_.error).transform(b => !b))(_ && _)
     produce(loadSuccess) { loaded =>
-      println(s"Item Popularity is loaded: $loaded")
+      //println(s"Item Popularity is loaded: $loaded")
       if (loaded) {
         UdashTable(hover = Property(true))(model.subSeq(_.elements))(
           rowFactory = (p) => tr(tableElementsFactory(p).map(name => td(name))).render,

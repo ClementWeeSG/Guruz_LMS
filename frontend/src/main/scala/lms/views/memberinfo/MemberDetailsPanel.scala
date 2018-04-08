@@ -30,9 +30,14 @@ class MemberDetailsPanel(detailsModel: ModelProperty[SingleLoadingModel[MemberDe
   }
 
   def getDetailValues(details: MemberDetails): Seq[Modifier] = {
+    println(s"MemberDetails: Reading ${details}")
+    val replacementsDesc = Option((details.replacements).asInstanceOf[Int]).map(_.toString).getOrElse("(None)") // cheap hack
     Seq(
-      span(details.memberName).render
-    )
+      details.memberName,
+      details.memberType,
+      details.residencyType,
+      replacementsDesc
+    ).map(span(_))
   }
 
 

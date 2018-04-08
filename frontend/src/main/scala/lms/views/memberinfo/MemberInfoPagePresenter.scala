@@ -40,7 +40,7 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
         selectedCard.set(card)
         println(s"Member Info: Loading Member Details for member: $card")
         loadMemberDetails(details, LMSGlobal.memberAPI.getMemberDetails(card))
-        println("Member Info: Loaded Member Details successfully")
+        //println("Member Info: Loaded Member Details successfully")
         println(s"Member Info: Loading transactions for member: $card")
         loadTransactions(transactions, LMSGlobal.memberAPI.getMemberTransactions(card))
 
@@ -56,7 +56,7 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
         loadingModel.subProp(_.loaded).set(true)
         loadingModel.subProp(_.error).set(false)
         loadingModel.subProp(_.item).set(Some(elem))
-        println("Member Info: Loaded Member Transactions successfully")
+        println("Member Info: Loaded Member Details successfully")
         println(s"Member Info retrieved: $elem")
       case Failure(ex) =>
         loadingModel.subProp(_.error).set(true)
