@@ -2,6 +2,7 @@ package lms.views.wishlist
 
 import io.udash._
 import io.udash.bootstrap._
+import io.udash.bootstrap.form.{UdashForm, UdashInputGroup}
 import io.udash.bootstrap.navs.UdashNav
 import io.udash.css.CssView
 import io.udash.properties.seq.SeqProperty
@@ -25,7 +26,13 @@ class WishlistView(presenter: WishListPresenter) extends FinalView with CssView 
     }
   }
 
-  override def getTemplate: Modifier = {
+  override def getTemplate: Modifier = div(
+    layoutRow(span(h3("School Visits: Check List"))),
+    layoutRow(selector),
+    layoutRow(innerPanel)
+  )
+
+  private def innerPanel: Modifier = {
     div(BootstrapStyles.row, BootstrapStyles.containerFluid)(
       UdashNav.tabs(justified = true)(panels)(
         elemFactory = (panel) => a(href := "", onclick :+= ((ev: Event) => {
@@ -38,6 +45,20 @@ class WishlistView(presenter: WishListPresenter) extends FinalView with CssView 
         selected.transform(_.content.render(presenter.showingSpecific)).get
       )
     ).render
+  }
+
+  private def layoutRow(modifiers: Modifier*) = div(BootstrapStyles.row)(modifiers)
+
+  private def selector = {
+    produce(presenter.libraries) { cats =>
+      UdashForm.inline(
+        UdashInputGroup()(
+          UdashInputGroup.addon("Filter by Library: "),
+          UdashForm.select(presenter.selectedLibrary, cats)
+        ).render
+      ).render
+    }
+
   }
 }
 
