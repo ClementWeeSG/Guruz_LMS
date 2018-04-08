@@ -68,7 +68,7 @@ class ItemPopularityPagePresenter extends Presenter[ItemPopularityState.type] wi
   def reloadTable(start: String = startDate.get, end: String = endDate.get)(implicit executionContext: ExecutionContext): Unit = {
     resetLoadingModel()
     println("ItemPopularity: Reloading Data for Table...")
-    LMSGlobal.itemPopularityAPI.getTop3Books(startDate.get, end).onComplete {
+    LMSGlobal.itemPopularityAPI.getTop3Books(start, end).onComplete {
       case Success(items) => successfullyLoad(items)
       case Failure(ex) => handle(ex)
     }

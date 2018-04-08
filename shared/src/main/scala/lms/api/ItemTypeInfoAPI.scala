@@ -12,7 +12,7 @@ trait ItemTypeInfoAPI {
   def types(): Future[List[String]]
 
   @GET
-  @RESTName("series-items")
+  @RESTName("series")
   def items(@URLPart itemType: String): Future[Seq[LibraryItemInfo]]
 }
 

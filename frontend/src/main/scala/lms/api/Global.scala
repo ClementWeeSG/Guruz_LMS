@@ -18,6 +18,8 @@ object Global extends js.Object {
 @js.native
 trait LMSAPI extends js.Object {
   def debug: js.UndefOr[Boolean] = js.native
+
+  val base: String = js.native
 }
 
 object LMSGlobal {
@@ -28,7 +30,7 @@ object LMSGlobal {
   if (isDebug) println("Running in Debug Mode") else println("Running in Live mode")
 
   lazy val server = DefaultServerREST[MainServerREST](
-    Protocol.Http, dom.window.location.hostname, Try(dom.window.location.port.toInt).getOrElse(80), "/api/"
+    Protocol.Http, dom.window.location.hostname, Try(dom.window.location.port.toInt).getOrElse(80), s"${Global.lms.map(_.base).getOrElse("")}/api/"
   )
   val memberAPI: MemberInfoAPI = if (isDebug) DummyMemberInfoAPI else server.members()
   val itemPopularityAPI = if (isDebug) DummyItemPopularityAPI else server.popularity()

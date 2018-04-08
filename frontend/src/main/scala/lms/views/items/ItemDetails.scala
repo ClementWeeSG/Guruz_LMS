@@ -15,7 +15,7 @@ class ItemDetails(items: ModelProperty[DataLoadingModel[LibraryItemInfo]]) {
     Seq("Series Title", "Item Title", "Series Order", "Number of Libraries With Stock"),
     (prop) => {
       val data = prop.get
-      val orderStr = data.order.map(_.toString).getOrElse("")
+      val orderStr = data.order.toString
       Seq(
         data.series,
         data.title,
