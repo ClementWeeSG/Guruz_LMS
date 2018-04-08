@@ -25,6 +25,11 @@ val compileStatics = taskKey[File](
 val compileAndOptimizeStatics = taskKey[File](
   "Compiles and optimizes JavaScript files and copies all assets to the target directory."
 )
+//val copyToServer = taskKey[Unit]("Copies all assets to the server")
+val deploy = taskKey[File]("Compiles and Deploys files to Apache")
+val apacheServer = settingKey[File]("Where the remote site is")
+
+//val deploymentType = settingKey[TaskKey[File]]("What sort of deployment we want")
 
 lazy val `guruz_lms` = project.in(file("."))
   .aggregate(sharedJS, sharedJVM, frontend, backend)
@@ -83,6 +88,20 @@ lazy val frontend = project.in(file("frontend")).enablePlugins(ScalaJSPlugin)
     compileAndOptimizeStatics := compileAndOptimizeStatics.dependsOn(
       Compile / fullOptJS, Compile / copyAssets
     ).value,
+
+    //Deploys to Apache Server
+
+    deploy := {
+      IO.copyDirectory(
+        compileStatics.value,
+        apacheServer.value
+      )
+      apacheServer.value
+    },
+
+    //Deployment Settings
+    //deploymentType := compileStatics,
+    apacheServer := file("C:\\wamp64\\www\\guruz_lms"),
 
     // Target files for Scala.js plugin
     Compile / fastOptJS / artifactPath :=
