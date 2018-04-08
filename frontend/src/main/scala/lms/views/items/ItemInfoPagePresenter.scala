@@ -38,6 +38,7 @@ class ItemInfoPagePresenter extends Presenter[ItemTypeInfoState] with ViewFactor
         info.subProp(_.loaded).set(false, true)
         info.subProp(_.loadingText).set("Item Info: Error Loading Item Types", true)
       case Some(category) =>
+        selectedCategory.set(category)
         loadItemDetails(LMSGlobal.itemsAPI.items(category))
     }
 
