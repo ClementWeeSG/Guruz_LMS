@@ -28,7 +28,7 @@ class RootView extends ContainerView with CssView {
     )
   ).render
 
-  private def contentHolder = div(id := "content")(
+  private def contentHolder = div(id := "content", BootstrapStyles.containerFluid)(
     nav(BootstrapStyles.Navigation.nav, BootstrapStyles.Navigation.navbarDefault)(
       div(BootstrapStyles.containerFluid)(
         div(BootstrapStyles.Navigation.navbarHeader)(

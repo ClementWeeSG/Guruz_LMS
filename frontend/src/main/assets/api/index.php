@@ -81,7 +81,7 @@ FROM
 Flight::route('GET /item-popularity', function(){
 	$start = Flight::request()->query->start;
 	$end = Flight::request()->query['end'];
-	Flight::queryTable(function($conn) use ($start, $end, $bet_clause){
+	Flight::queryTable(function($conn) use ($start, $end){
 		$q="SELECT temp.item AS itemId, i.Title AS itemTitle, temp.n1, temp.n2, temp.score, (@cnt := @cnt + 1) AS rank
 			FROM
 			(select t1.item, t1.n1 as n1, t2.n2 as n2, (t1.n1+t2.n2) as score
