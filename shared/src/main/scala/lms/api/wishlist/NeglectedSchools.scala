@@ -1,7 +1,7 @@
 package lms.api.wishlist
 
 import io.udash.rest._
-import lms.models.wishlist.SchoolsByLibraryRow
+import lms.models.wishlist.{SchoolTag, SchoolsByLibraryRow}
 
 import scala.concurrent.Future
 
@@ -11,5 +11,5 @@ trait NeglectedSchools {
   def all(): Future[List[SchoolsByLibraryRow]]
 
   @SkipRESTName
-  def byLibrary(@URLPart lib: String): Future[List[String]]
+  def byLibrary(@URLPart lib: String): Future[List[SchoolTag]]
 }
