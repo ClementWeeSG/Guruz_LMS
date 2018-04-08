@@ -69,7 +69,7 @@ lazy val frontend = project.in(file("frontend")).enablePlugins(ScalaJSPlugin)
     copyAssets := {
       IO.copyDirectory(
         sourceDirectory.value / "main/assets",
-        target.value / frontendWebContent / "assets"
+        target.value / frontendWebContent
       )
       IO.copyFile(
         sourceDirectory.value / "main/assets/index.html",
@@ -93,11 +93,12 @@ lazy val frontend = project.in(file("frontend")).enablePlugins(ScalaJSPlugin)
 
     deploy := {
       IO.copyDirectory(
-        compileStatics.value,
+        target.value / frontendWebContent,
         apacheServer.value
       )
       apacheServer.value
     },
+    deploy := deploy.dependsOn(Compile / compileStatics).value,
 
     //Deployment Settings
     //deploymentType := compileStatics,
