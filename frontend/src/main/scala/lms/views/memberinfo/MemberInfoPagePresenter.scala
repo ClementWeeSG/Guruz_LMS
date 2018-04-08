@@ -6,7 +6,6 @@ import io.udash.properties.model.ModelProperty
 import io.udash.properties.seq.SeqProperty
 import io.udash.properties.single.Property
 import lms.api.LMSGlobal
-//import lms.api.LMSGlobal
 import lms.models._
 import lms.routing.MemberInfoState
 
@@ -16,6 +15,7 @@ import scala.util.{Failure, Success}
 
 class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactory[MemberInfoState] with MemberInfoCreation {
 
+  val details = ModelProperty(new SingleLoadingModel[MemberDetails]())
   val transactions = ModelProperty(new DataLoadingModel[BookTransactionDetails]())
   val members = SeqProperty.empty[String]
   val selectedCard = Property.empty[String]
@@ -36,35 +36,31 @@ class MemberInfoPagePresenter extends Presenter[MemberInfoState] with ViewFactor
       case Some("<Error>") =>
       //info.subModel(_.memberDetails).subProp(_.memberName).set("<ERROR>")
       case Some(card) =>
+        println(s"Member Info: Navigating to data for $card")
         selectedCard.set(card)
+        println(s"Member Info: Loading Member Details for member: $card")
+        loadMemberDetails(details, LMSGlobal.memberAPI.getMemberDetails(card))
+        println("Member Info: Loaded Member Details successfully")
+        println(s"Member Info: Loading transactions for member: $card")
         loadTransactions(transactions, LMSGlobal.memberAPI.getMemberTransactions(card))
-
-      /**
-        * val loadingModel1 = ModelProperty.empty[SingleLoadingModel[MemberDetails]]
-          * loadingModel1.set(new SingleLoadingModel[MemberDetails](item = MemberDetails("", "", "N/A", 0)))
-          * loadMemberDetails(loadingModel1, LMSGlobal.memberAPI.getMemberDetails(card)) { _ =>
-          * val loadingModel2 = ModelProperty.empty[DataLoadingModel[BookTransactionDetails]]
-          * loadingModel2.set(new DataLoadingModel[BookTransactionDetails])
-          * loadTransactions(loadingModel2, LMSGlobal.memberAPI.getMemberTransactions(card))
-        */
+        println("Member Info: Loaded Member Transactions successfully")
         }
   }
 
-  /*def loadMemberDetails(loadingModel: ModelProperty[SingleLoadingModel[MemberDetails]], target: Future[MemberDetails])(callback: MemberDetails => Unit): Unit = {
+  def loadMemberDetails(loadingModel: ModelProperty[SingleLoadingModel[MemberDetails]], target: Future[MemberDetails]): Unit = {
     loadingModel.subProp(_.loaded).set(false)
     loadingModel.subProp(_.loadingText).set("Loading ...")
 
     target onComplete {
       case Success(elem) =>
         loadingModel.subProp(_.loaded).set(true)
-        loadingModel.subProp(_.item).set(elem)
-        callback(elem)
+        loadingModel.subProp(_.item).set(Some(elem))
       case Failure(ex) =>
+        loadingModel.subProp(_.error).set(false)
         loadingModel.subProp(_.loadingText).set(s"Error: $ex")
     }
 
   }
-  */
 
   def loadTransactions(loadingModel: ModelProperty[DataLoadingModel[BookTransactionDetails]], elements: Future[Seq[BookTransactionDetails]]): Unit = {
     loadingModel.subProp(_.loaded).set(false)

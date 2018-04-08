@@ -26,7 +26,7 @@ object DataLoadingModel {
 }
 
 class SingleLoadingModel[T](
-                             val item: T,
+                             val item: Option[T] = None,
                              val loaded: Boolean = false,
                              val loadingText: String = "Loading ...",
                              val error: Boolean = false

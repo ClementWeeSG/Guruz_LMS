@@ -14,17 +14,13 @@ import scalatags.JsDom.all._
 
 class MemberInfoView(presenter: MemberInfoPagePresenter) extends FinalView with CssView with MemberInfoCreation {
 
-  //val details = presenter.info.subModel(_.memberDetails)
-  //val transactions = presenter.info.subSeq(_.transactions)
-  //val transactionsData = ModelProperty(new DataLoadingModel[BookTransactionDetails]())
-
   presenter.selectedCard.listen {
     cardId => ApplicationContext.applicationInstance.goTo(MemberInfoState(Option(cardId).filter(_.nonEmpty)))
   }
 
   override def getTemplate: Modifier = frag(
     layoutRow(MemberSelector),
-    //layoutRow(MemberDetailsPanel(details)),
+    layoutRow(MemberDetailsPanel(presenter.details)),
     layoutRow(MemberTransactions(presenter.transactions))
   )
 

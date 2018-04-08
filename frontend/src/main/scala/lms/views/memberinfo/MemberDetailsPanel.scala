@@ -12,17 +12,17 @@ import scalatags.JsDom.all._
 
 
 object MemberDetailsPanel {
-  def apply(model: ModelProperty[MemberDetails]): Element = new MemberDetailsPanel(model).render
+  def apply(model: ModelProperty[SingleLoadingModel[MemberDetails]]): Element = new MemberDetailsPanel(model).render
 }
 
-class MemberDetailsPanel(detailsModel: ModelProperty[MemberDetails]) extends CssView with MemberInfoCreation {
+class MemberDetailsPanel(detailsModel: ModelProperty[SingleLoadingModel[MemberDetails]]) extends CssView with MemberInfoCreation {
 
   def render(): Element = {
     UdashPanel(PanelStyle.Info)(
       UdashPanel.heading("Member Information"),
       UdashPanel.body(
         DataList[MemberDetails](
-          ModelProperty.apply(new SingleLoadingModel[MemberDetails](item = MemberDetails("", "", "N/A", 0))),
+          detailsModel,
           Seq("Member Name", "Membership Type", "Residency Type", "Total Times Card Replaced"),
           prop => getDetailValues(prop.asModel)
         )
