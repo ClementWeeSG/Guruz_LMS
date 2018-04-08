@@ -22,8 +22,9 @@ class ItemInfoPagePresenter extends Presenter[ItemTypeInfoState] with ViewFactor
   LMSGlobal.itemsAPI.types().map {
     types =>
       categories.clear()
-      categories.set("" :: types)
-      println(s"Finished loading types: [$types]")
+      categories.append("")
+      categories.append(types:_*)
+      println(s"Item Info: Finished loading types: [$types]")
   } recover {
     case t: Throwable =>
       categories.append("<ERROR>")
@@ -35,7 +36,7 @@ class ItemInfoPagePresenter extends Presenter[ItemTypeInfoState] with ViewFactor
       case Some("<Error>") =>
         info.subProp(_.error).set(true, true)
         info.subProp(_.loaded).set(false, true)
-        info.subProp(_.loadingText).set("Error Loading Item Types", true)
+        info.subProp(_.loadingText).set("Item Info: Error Loading Item Types", true)
       case Some(category) =>
         loadItemDetails(LMSGlobal.itemsAPI.items(category))
     }
