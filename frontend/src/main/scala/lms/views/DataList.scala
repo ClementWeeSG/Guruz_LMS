@@ -10,25 +10,35 @@ import scalatags.JsDom.all._
 
 object DataList {
 
-  case class DetailsRow(property: String, value: ReadableProperty[String])
+  type RowFactory[T] = T => Seq[Modifier]
 
-  def apply[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], headers: Seq[String], rowFactory: CastableProperty[T] => Seq[ReadableProperty[String]]) =
+  case class DetailsRow(property: String, value: Modifier)
+
+  def apply[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], headers: Seq[String], rowFactory: RowFactory[T]) =
     new DataList[T](model, headers, rowFactory).render()
 }
 
-class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], headers: Seq[String], rowFactory: CastableProperty[T] => Seq[ReadableProperty[String]]) extends CssView {
+class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], headers: Seq[String], rowFactory: DataList.RowFactory[T]) extends CssView {
   def render(): Modifier = {
-    val displayProperty = model.subProp(_.item).asInstanceOf[CastableProperty[T]]
-    val rowValues = rowFactory(displayProperty)
-    produce(model.subProp(_.loaded)) { loaded =>
-      val isError = model.subProp(_.error).get
-      if (loaded && !isError) {
-        renderRows(SeqProperty(compileDetailsRows(headers, rowValues)))
+    val displayProperty: Property[Option[T]] = model.subProp(_.item)
+    val loaded = model.subProp(_.loaded).combine(model.subProp(_.error))(_ && _)
+    produce(loaded) { loaded =>
+      if (loaded) {
+        div(
+          produce(displayProperty) { itemAsSeq =>
+            itemAsSeq.headOption match {
+              case None => span(bind(model.subProp(_.loadingText))).render
+              case Some(view) =>
+                val rows = compileDetailsRows(headers, rowFactory(view))
+                renderRows(SeqProperty(rows)).render
+            }
+          }
+        ).render
       } else span(bind(model.subProp(_.loadingText))).render
     }
   }
 
-  private def compileDetailsRows(headers: Seq[String], values: Seq[ReadableProperty[String]]): Seq[DataList.DetailsRow] = {
+  def compileDetailsRows(headers: Seq[String], values: Seq[Modifier]): Seq[DataList.DetailsRow] = {
     headers.zip(values) map {
       case (header, value) => DataList.DetailsRow(header, value)
     }
@@ -38,7 +48,7 @@ class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], 
   def renderRow(row: DataList.DetailsRow): LI = {
     li(
       strong(s"${row.property}:"),
-      span(textDecoration.underline)(bind(row.value))
+      span(textDecoration.underline)(row.value)
     ).render
   }
 

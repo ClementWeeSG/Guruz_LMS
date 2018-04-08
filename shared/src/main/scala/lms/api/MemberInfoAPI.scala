@@ -24,10 +24,10 @@ trait MemberInfoAPI {
 object DummyMemberInfoAPI extends MemberInfoAPI {
 
   private val dummyMembers: Map[String, (MemberDetails, List[BookTransactionDetails])] = Map(
-    "h1134" -> (MemberDetails("Clement", "BRONZE", "", 5), List()),
-    "k56yu" -> (MemberDetails("Ben", "SILVER", "", 2), List()),
-    "lll0987f" -> (MemberDetails("Jan", "GOLD", "", 0), List()),
-    "po56k32" -> (MemberDetails("Wilson", "PLATINUM", "", 0), List())
+    "h1134" -> (MemberDetails("Clement", "BRONZE", "", Some(5)), List()),
+    "k56yu" -> (MemberDetails("Ben", "SILVER", "", Some(1)), List()),
+    "lll0987f" -> (MemberDetails("Jan", "Partner", "", None), List()),
+    "po56k32" -> (MemberDetails("Wilson", "PLATINUM", "", None), List())
   )
   override def selectCardNos() = Future.successful(dummyMembers.keySet.toList)
   override def getMemberDetails(cardId: String) = Future(dummyMembers.get(cardId).map(_._1).get)
