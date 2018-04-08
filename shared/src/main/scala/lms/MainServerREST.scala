@@ -1,7 +1,9 @@
 package lms
 
 import io.udash.rest._
-import lms.api.{ItemPopularityAPI, ItemTypeInfoAPI, MemberInfoAPI}
+import lms.api.{ItemPopularityAPI, ItemTypeInfoAPI, MemberInfoAPI, WishListAPI}
+
+import scala.concurrent.Future
 
 @REST
 trait MainServerREST {
@@ -11,6 +13,13 @@ trait MainServerREST {
   def popularity(): ItemPopularityAPI
   @SkipRESTName
   def series(): ItemTypeInfoAPI
+
+  @GET
+  @RESTName("libraries")
+  def libraries(): Future[List[String]]
+
+  @RESTName("visits-wishlist")
+  def wishlist(): WishListAPI
 }
 
 /**
