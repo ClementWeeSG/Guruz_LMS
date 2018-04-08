@@ -21,7 +21,7 @@ object DataList {
 class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], headers: Seq[String], rowFactory: DataList.RowFactory[T]) extends CssView {
   def render(): Modifier = {
     val displayProperty: Property[Option[T]] = model.subProp(_.item)
-    val loaded = model.subProp(_.loaded).combine(model.subProp(_.error))(_ && _)
+    val loaded = model.subProp(_.loaded).combine(model.subProp(_.error).transform(!_))(_ && _)
     produce(loaded) { loaded =>
       if (loaded) {
         div(
@@ -48,6 +48,7 @@ class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], 
   def renderRow(row: DataList.DetailsRow): LI = {
     li(
       strong(s"${row.property}:"),
+      spaces(2),
       span(textDecoration.underline)(row.value)
     ).render
   }
@@ -55,4 +56,6 @@ class DataList[T: PropertyCreator](model: ModelProperty[SingleLoadingModel[T]], 
   def renderRows(rows: ReadableSeqProperty[DataList.DetailsRow]) = {
     UdashListGroup(rows)(_.transform(renderRow).get).render
   }
+
+  def spaces(num: Int) = (1 to num).map(_ => " ").mkString
 }
