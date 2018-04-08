@@ -16,6 +16,8 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case "/popularity" => ItemPopularityState
     case "/series" => ItemTypeInfoState(None)
     case "/series" / category => ItemTypeInfoState(Some(category))
+    case "/wishlist" => WishListState(None)
+    case "wishlist" / lib => WishListState(Some(lib))
     case _ => ErrorState
   }
 
@@ -25,7 +27,9 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case MemberInfoState(Some(card)) => s"/members/$card"
     case ItemPopularityState => "/popularity"
     case ItemTypeInfoState(Some(cat)) => s"/series/$cat"
-    case ItemTypeInfoState(None) => s"/series"
+    case ItemTypeInfoState(None) => "/series"
+    case WishListState(None) => "/wishlist"
+    case WishListState(Some(lib)) => s"/wishlist/$lib"
     case _ => "/error"
   }
 }

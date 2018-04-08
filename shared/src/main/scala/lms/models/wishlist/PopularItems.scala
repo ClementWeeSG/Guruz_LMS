@@ -1,18 +1,21 @@
 package lms.models.wishlist
 
-import com.avsystem.commons.serialization.{HasGenCodec, transparent}
+import com.avsystem.commons.serialization.HasGenCodec
 
 object PopularItems {
 
-  case class ByLibrary(title: String, series: SyntheticOption[String], order: SyntheticOption[Int], numCopies: Int)
-
+  case class ByLibrary(title: String, series: Option[String], order: Option[Int], numCopies: Int)
   object ByLibrary extends HasGenCodec[ByLibrary]
 
-  case class All(library: String, title: String, series: SyntheticOption[String], order: SyntheticOption[Int], numCopies: Int)
+  case class All(library: String, title: String, series: Option[String], order: Option[Int], numCopies: Int)
+
+  object All extends HasGenCodec[All]
 
 }
 
-@transparent
-case class SyntheticOption[T](value: T) {
-  implicit def asOption: Option[T] = Option(value)
+object SyntheticOption {
+
+  implicit class FixedOption[T](op: Option[T]) {
+    def fix() = Option(op.asInstanceOf[T])
+  }
 }
