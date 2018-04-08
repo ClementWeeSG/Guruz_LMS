@@ -2,13 +2,6 @@
 require_once 'flight/Flight.php';
 require 'init.php';
 
-//  Flight::set("flight.base_url","/guruz_lms/api/");
-
-Flight::route('/', function(){
-    echo 'hello world!';
-});
-
-
 Flight::route('GET /members', function(){
 	Flight::queryArray(function($conn){
 		return mysqli_prepare($conn, "select Card_ID from g1t06.card");
@@ -127,14 +120,70 @@ order by Series_Title asc, Series_Order asc";
 	});
 });
 
-Flight::route("GET /test", function(){
-	echo "Test is a success!";
+Flight::route("GET /libraries", function(){
+	Flight::queryArray(function($conn){
+		return mysqli_prepare($conn, "select Lib_Name from g1t06.library");
+	});
+});
+
+Flight::route('GET /wishlist/schools', function(){
+	Flight::queryTable(function ($conn){
+		$q = "select lib.Lib_Name as library, sch.Sch_Name as school from
+school sch, library lib where sch.Sch_Name not in (
+select distinct Sch_Name from school_visit)
+order by Lib_Name, sch.Sch_Name asc;";
+	$stmt = mysqli_prepare($conn, $q);
+	return $stmt;
+	});
+});
+
+Flight::route('GET /wishlist/schools/@lib', function($lib){
+	Flight::queryArray(function ($conn) use ($lib){
+		$q = "select sch.Sch_Name from
+school sch where sch.Sch_Name not in (
+select distinct Sch_Name from school_visit where Lib_Name=?)
+order by Sch_Name asc";
+	$stmt = mysqli_prepare($conn, $q);
+	mysqli_stmt_bind_param($stmt, "s", $lib);
+	return $stmt;
+	});
+});
+
+Flight::route('GET /wishlist/books', function(){
+	Flight::queryTable(function ($conn){
+		$q = "select cp.Lib_Name as library, it.Series_Title as series, it.Series_Order as `order`, it.Title as title, cp.Num_of_copies AS numCopies from
+item it left outer join visit_items vi
+on vi.Item_ID=it.Item_ID
+inner join library_copies cp
+where vi.Lib_Name is null and vi.Visit_date is null
+and cp.Item_ID=it.Item_ID
+and it.Item_Type= 'Book'
+order by cp.Lib_Name Asc, Series_Title asc, Series_Order asc, Num_of_copies desc, it.Title asc";
+	$stmt = mysqli_prepare($conn, $q);
+	return $stmt;
+	});
+});
+
+Flight::route('GET /wishlist/books/@lib', function($lib){
+	Flight::queryTable(function ($conn) use ($lib){
+		$q = "select cp.Lib_Name as library, it.Series_Title as series, it.Series_Order as `order`, it.Title as title, cp.Num_of_copies AS numCopies from
+item it left outer join visit_items vi
+on vi.Item_ID=it.Item_ID
+inner join library_copies cp
+where vi.Lib_Name is null and vi.Visit_date is null
+and cp.Item_ID=it.Item_ID
+and cp.Lib_Name = ?
+and it.Item_Type= 'Book'
+order by cp.Lib_Name Asc, Series_Title asc, Series_Order asc, Num_of_copies desc, it.Title asc";
+	$stmt = mysqli_prepare($conn, $q);
+	mysqli_stmt_bind_param($stmt, "s", $lib);
+	return $stmt;
+	});
 });
 
 Flight::map('notFound', function(){
     echo "Site is not working properly";
-});
-
+}); 
 
 Flight::start();
 ?>
