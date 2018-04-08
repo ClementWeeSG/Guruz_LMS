@@ -1,5 +1,6 @@
 package lms.views.memberinfo
 
+import io.udash.bootstrap.panel.{PanelStyle, UdashPanel}
 import io.udash.properties.model.ModelProperty
 import lms.models.{BookTransactionDetails, DataLoadingModel}
 import lms.views._
@@ -10,7 +11,14 @@ object MemberTransactions {
 }
 
 class MemberTransactions(transactions: ModelProperty[DataLoadingModel[BookTransactionDetails]]) {
-  def render() = DataTable[BookTransactionDetails](
+  private def panel() = UdashPanel(PanelStyle.Info)(
+    UdashPanel.heading(h4("Transaction Details")),
+    UdashPanel.body(body())
+  ).render
+
+  def render() = panel()
+
+  private def body() = DataTable[BookTransactionDetails](
     transactions,
     Seq("Date", "Transaction Type", "Number of Books Borrowed", "Number of Books Renewed", "Fine Paid"),
     (prop) => {
