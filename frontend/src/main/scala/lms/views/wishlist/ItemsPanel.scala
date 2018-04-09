@@ -1,9 +1,36 @@
 package lms.views.wishlist
 
 import org.scalajs.dom.Node
+import scalatags.JsDom.all._
+import lms.models.wishlist.SyntheticOption._
+import lms.models.wishlist.PopularItems._
+import lms.views.DataTable
 
-case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Items Not Yet Brought For Visits") {
-  override def allPanel(): Seq[Node] = ???
+case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Books Not Yet Brought For Visits") {
+  override def allPanel(): Modifier = DataTable[All](
+    model.allModel,
+    Seq("Library", "Item Title", "Series Title", "Series Order", "No. of Copies in Stock"),
+    prop => {
+      val data = prop.get
+      Seq(
+        data.library,
+        data.title,
+        data.series.fix().getOrElse(""),
+        data.order.fix.map(_.toString).getOrElse(""),
+        data.numCopies.toString
+      )
+    })
 
-  override def specificPanel(): Seq[Node] = ???
+  override def specificPanel(): Modifier = DataTable[ByLibrary](
+    model.singleLibraryModel,
+    Seq("Item Title", "Series Title", "Series Order", "No. of Copies in Stock"),
+    prop => {
+      val data = prop.get
+      Seq(
+        data.title,
+        data.series.fix().getOrElse(""),
+        data.order.fix.map(_.toString).getOrElse(""),
+        data.numCopies.toString
+      )
+    })
 }

@@ -7,9 +7,9 @@ import scalatags.JsDom.all._
 import scalatags.JsDom._
 
 abstract class WishListPanel(title: String) {
-  def allPanel(): Seq[Node]
+  def allPanel(): Modifier
 
-  def specificPanel(): Seq[Node]
+  def specificPanel(): Modifier
 
   def render(showingSpecific: ReadableProperty[Boolean]): Modifier = {
     UdashPanel(PanelStyle.Info)(
@@ -17,7 +17,7 @@ abstract class WishListPanel(title: String) {
       UdashPanel.body(
         div(
           produce(showingSpecific) { isSpecific =>
-            if (isSpecific) specificPanel() else allPanel()
+            if (isSpecific) div(specificPanel()).render else div(allPanel()).render
           }
         ).render
       )
