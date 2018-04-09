@@ -20,6 +20,8 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case "/wishlist" / lib => WishListState(Some(lib))
     case "/debug/books" => DebugState(true)
     case "/debug/schools" => DebugState(false)
+    case "/debug/url" => DebugURLState(WishListState(None))
+    case "/debug/url" / frag => DebugURLState(WishListState(Some(frag)))
     case _ => ErrorState
   }
 
@@ -34,6 +36,8 @@ class RoutingRegistryDef extends RoutingRegistry[RoutingState] {
     case WishListState(Some(lib)) => s"/wishlist/$lib"
     case DebugState(true) => "/debug/books"
     case DebugState(false) => "/debug/schools"
+    case DebugURLState(WishListState(None)) => "/debug/url"
+    case DebugURLState(WishListState(Some(lib))) => s"/debug/url/$lib"
     case _ => "/error"
   }
 }

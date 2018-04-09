@@ -7,7 +7,7 @@ import lms.models._
 class ItemsLoadingModel extends WishListModel {
 
   val allModel = ModelProperty(new DataLoadingModel[wishlist.PopularItems.All]())
-  val singleLibraryModel = ModelProperty(new DataLoadingModel[wishlist.PopularItems.ByLibrary]())
+  val singleLibraryModel = ModelProperty(new DataLoadingModel[wishlist.PopularItems.All]())
 
   lazy val api = LMSGlobal.server.wishlist().popularItems()
 

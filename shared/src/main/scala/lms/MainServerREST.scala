@@ -20,6 +20,9 @@ trait MainServerREST {
 
   @RESTName("wishlist")
   def wishlist(): WishListAPI
+
+  @RESTName("debug-url") @GET
+  def url(input: String): Future[String]
 }
 
 /**
