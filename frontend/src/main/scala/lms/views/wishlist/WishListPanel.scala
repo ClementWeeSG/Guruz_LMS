@@ -2,9 +2,7 @@ package lms.views.wishlist
 
 import io.udash._
 import io.udash.bootstrap.panel.{PanelStyle, UdashPanel}
-import org.scalajs.dom.Node
 import scalatags.JsDom.all._
-import scalatags.JsDom._
 
 abstract class WishListPanel(title: String) {
   def allPanel(): Modifier

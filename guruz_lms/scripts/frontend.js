@@ -7741,7 +7741,8 @@ function $c_Llms_config_GuruzSidebarStyles$Icons$() {
   this.Members$1 = null;
   this.Books$1 = null;
   this.BestReads$1 = null;
-  this.TopReader$1 = null
+  this.TopReader$1 = null;
+  this.Visits$1 = null
 }
 $c_Llms_config_GuruzSidebarStyles$Icons$.prototype = new $h_O();
 $c_Llms_config_GuruzSidebarStyles$Icons$.prototype.constructor = $c_Llms_config_GuruzSidebarStyles$Icons$;
@@ -7760,6 +7761,7 @@ $c_Llms_config_GuruzSidebarStyles$Icons$.prototype.init___ = (function() {
   this.Books$1 = new $c_Lio_udash_css_CssPrefixedStyleName().init___T__T("glyphicon", "book");
   this.BestReads$1 = new $c_Lio_udash_css_CssPrefixedStyleName().init___T__T("glyphicon", "book");
   this.TopReader$1 = new $c_Lio_udash_css_CssPrefixedStyleName().init___T__T("fa", "trophy");
+  this.Visits$1 = new $c_Lio_udash_css_CssPrefixedStyleName().init___T__T("fa", "check-square");
   return this
 });
 var $d_Llms_config_GuruzSidebarStyles$Icons$ = new $TypeData().initClass({
@@ -16680,7 +16682,7 @@ $c_Llms_views_components_GuruzSidebar$.prototype.init___ = (function() {
   var raw = false;
   this.expanded$1 = $f_Lscalatags_generic_Util__attr__T__Lscalatags_generic_Namespace__Z__Lscalatags_generic_Attr(this$3, "aria-expanded", ns, raw);
   this.toggle$1 = $m_Lio_udash_bootstrap_BootstrapTags$().dataToggle$1;
-  this.defaultItems$1 = $as_sc_Seq($m_sc_Seq$().apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().Home$1, "Start", $m_Llms_routing_IndexState$()), new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().Members$1, "Browse Members", new $c_Llms_routing_MemberInfoState().init___s_Option($m_s_None$())), new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().Books$1, "Browse Collections", new $c_Llms_routing_ItemTypeInfoState().init___s_Option($m_s_None$())), new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().BestReads$1, "View Top Reads", $m_Llms_routing_ItemPopularityState$())])));
+  this.defaultItems$1 = $as_sc_Seq($m_sc_Seq$().apply__sc_Seq__sc_GenTraversable(new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().Home$1, "Start", $m_Llms_routing_IndexState$()), new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().Members$1, "Browse Members", new $c_Llms_routing_MemberInfoState().init___s_Option($m_s_None$())), new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().Books$1, "Browse Collections", new $c_Llms_routing_ItemTypeInfoState().init___s_Option($m_s_None$())), new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().BestReads$1, "View Top Reads", $m_Llms_routing_ItemPopularityState$()), new $c_Llms_views_components_GuruzSidebar$SidebarItem().init___Lio_udash_css_CssStyle__T__Llms_routing_RoutingState($m_Llms_config_GuruzSidebarStyles$Icons$().Visits$1, "Monitor School Visits Program", new $c_Llms_routing_WishListState().init___s_Option($m_s_None$()))])));
   return this
 });
 $c_Llms_views_components_GuruzSidebar$.prototype.render__sc_Seq__T__Lscalatags_generic_Modifier = (function(items, title) {

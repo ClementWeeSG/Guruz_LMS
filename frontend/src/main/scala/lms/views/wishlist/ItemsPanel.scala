@@ -12,12 +12,12 @@ case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Books Not
     prop => {
       val data = prop.get
       Seq(
-        data.library,
-        data.title,
-        data.series.fix().getOrElse(""),
-        data.order.fix.map(_.toString).getOrElse(""),
-        data.numCopies.toString
-      )
+        (data.library),
+        (data.title),
+        (data.series.fix().getOrElse("")),
+        (data.order.fix().map(_.toString).getOrElse("")),
+        (data.numCopies.toString)
+      ).map(span(_))
     })
 
   override def specificPanel(): Modifier = DataTable[ByLibrary](
@@ -30,6 +30,6 @@ case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Books Not
         data.series.fix().getOrElse(""),
         data.order.fix.map(_.toString).getOrElse(""),
         data.numCopies.toString
-      )
+      ).map(span(_))
     })
 }
