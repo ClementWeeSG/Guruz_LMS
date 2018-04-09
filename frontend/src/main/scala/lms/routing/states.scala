@@ -31,3 +31,5 @@ case class ItemTypeInfoState(itemType: Option[String]) extends FinalRoutingState
 case object ItemPopularityState extends FinalRoutingState(Some(RootState))
 
 case class WishListState(lib: Option[String]) extends FinalRoutingState(Some(RootState))
+
+case class DebugState(items: Boolean) extends FinalRoutingState(Some(RootState))

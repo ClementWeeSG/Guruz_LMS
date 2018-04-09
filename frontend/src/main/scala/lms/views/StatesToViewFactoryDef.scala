@@ -8,6 +8,7 @@ import lms.views.items.ItemInfoPagePresenter
 import lms.views.memberinfo.MemberInfoPagePresenter
 import lms.views.popularity.ItemPopularityPagePresenter
 import lms.views.wishlist.WishListPresenter
+import lms.views.wishlist.debug.DebugPresenter
 
 class StatesToViewFactoryDef extends ViewFactoryRegistry[RoutingState] {
   def matchStateToResolver(state: RoutingState): ViewFactory[_ <: RoutingState] = state match {
@@ -17,6 +18,7 @@ class StatesToViewFactoryDef extends ViewFactoryRegistry[RoutingState] {
     case ItemPopularityState => new ItemPopularityPagePresenter
     case ItemTypeInfoState(typeId) => new ItemInfoPagePresenter
     case WishListState(_) => new WishListPresenter
+    case DebugState(_) => new DebugPresenter
     case _ => ErrorViewFactory
   }
 }

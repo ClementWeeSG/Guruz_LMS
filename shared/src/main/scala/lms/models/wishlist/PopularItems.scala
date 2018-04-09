@@ -6,13 +6,13 @@ import com.avsystem.commons.misc.Opt
 
 object PopularItems {
 
-  case class ByLibrary(title: String, series: Opt[String], order: Opt[Int], numCopies: Int)
+  case class ByLibrary(series: Opt[String], order: Opt[Int], title: String, numCopies: Int)
 
   object ByLibrary extends HasGenCodec[ByLibrary] {
     implicit def modelPropertyCreator = ModelPropertyCreator.materialize[ByLibrary]
   }
 
-  case class All(library: String, title: String, series: Opt[String], order: Opt[Int], numCopies: Int)
+  case class All(library: String, series: Opt[String], order: Opt[Int], title: String, numCopies: Int)
 
   object All extends HasGenCodec[All] {
     implicit def modelPropertyCreator = ModelPropertyCreator.materialize[All]

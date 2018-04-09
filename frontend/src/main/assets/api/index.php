@@ -174,7 +174,7 @@ order by cp.Lib_Name Asc, Series_Title asc, Series_Order asc, Num_of_copies desc
 
 Flight::route('GET /wishlist/books/@lib', function($lib){
 	Flight::queryTable(function ($conn) use ($lib){
-		$q = "select cp.Lib_Name as library, it.Series_Title as series, it.Series_Order as `order`, it.Title as title, cp.Num_of_copies AS numCopies from
+		$q = "select it.Series_Title as series, it.Series_Order as `order`, it.Title as title, cp.Num_of_copies AS numCopies from
 item it left outer join visit_items vi
 on vi.Item_ID=it.Item_ID
 inner join library_copies cp
