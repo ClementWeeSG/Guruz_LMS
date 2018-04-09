@@ -9,6 +9,7 @@ trait PopularItems {
   @SkipRESTName @GET
   def all(): Future[List[lms.models.wishlist.PopularItems.All]]
 
+  @SkipRESTName @GET
   def byLibrary(lib: String): Future[List[lms.models.wishlist.PopularItems.All]]
 
 }
