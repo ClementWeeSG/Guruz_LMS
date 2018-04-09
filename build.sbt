@@ -27,6 +27,7 @@ val compileAndOptimizeStatics = taskKey[File](
 )
 //val copyToServer = taskKey[Unit]("Copies all assets to the server")
 val deploy = taskKey[File]("Compiles and Deploys files to Apache")
+val prepareBinaries = taskKey[File]("Compiles and Deploys to Mock")
 val apacheServer = settingKey[File]("Where the remote site is")
 
 //val deploymentType = settingKey[TaskKey[File]]("What sort of deployment we want")
@@ -99,6 +100,17 @@ lazy val frontend = project.in(file("frontend")).enablePlugins(ScalaJSPlugin)
       apacheServer.value
     },
     deploy := deploy.dependsOn(Compile / compileStatics).value,
+
+    prepareBinaries := {
+      val dest = file("guruz_lms")
+      IO.copyDirectory(
+        target.value / frontendWebContent,
+        dest
+      )
+      dest
+    },
+    
+    prepareBinaries := prepareBinaries.dependsOn(Compile / compileStatics).value,
 
     //Deployment Settings
     //deploymentType := compileStatics,
