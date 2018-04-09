@@ -10,8 +10,16 @@ Flight::route('GET /members', function(){
 
 Flight::route('GET /members/details/@card', function($card){
 	Flight::queryRow(array("memberName","memberType","residencyType","replacements"),function($conn) use ($card){
-		$q = "select c.Name AS 'Member Name', c.Member_Type AS 'Member Type', r.Remark AS 'Residency Type', NULLIF(count(c.Card_Id)-1,0) AS 'Total Number of Replaced Cards'".
-" from g1t06.card c, g1t06.residence_status r"." where r.ID = c.Residency_ID and Card_ID=?";
+		$q = "select c.`Name` as MemberName,  c.Member_Type AS MemberType,
+ r.Remark AS ResidencyType,
+NULLIF(count(c.Old_ID),0) as 'TotalNumberOfReplacedCards'
+from  g1t06.card c
+left join g1t06.residence_status r on r.ID = c.Residency_ID 
+where  `Name` = (
+	select `Name`
+	from g1t06.card
+	where Card_ID = ?
+)";
         $stmt = mysqli_prepare($conn, $q);
 		mysqli_stmt_bind_param($stmt, 's', $card);
 		return $stmt;
