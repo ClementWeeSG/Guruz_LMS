@@ -18,7 +18,7 @@ trait MainServerREST {
   @RESTName("libraries")
   def libraries(): Future[List[String]]
 
-  @RESTName("visits-wishlist")
+  @RESTName("wishlist")
   def wishlist(): WishListAPI
 }
 

@@ -23190,7 +23190,7 @@ $c_Llms_api_LMSGlobal$$anon$8$$anon$9$$anon$10.prototype.signatures$lzycompute__
     var jsx$5 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$2, cbf$2));
     var e$1 = $m_Lio_udash_rest_DefaultRESTFramework$().ResultTypeMetadata__Lio_udash_rest_UdashRESTFramework$ResultTypeMetadata$();
     $m_sci_List$();
-    var xs$3 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___()]);
+    var xs$3 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___(), new $c_Lio_udash_rest_GET().init___()]);
     var this$11 = $m_sci_List$();
     var cbf$3 = this$11.ReusableCBFInstance$2;
     var y = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$6, "byLibrary", jsx$5, e$1, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$3, cbf$3)));
@@ -23203,7 +23203,7 @@ $c_Llms_api_LMSGlobal$$anon$8$$anon$9$$anon$10.prototype.signatures$lzycompute__
     var jsx$1 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$4, cbf$4));
     var e$2 = $m_Lio_udash_rest_DefaultRESTFramework$().ResultTypeMetadata__Lio_udash_rest_UdashRESTFramework$ResultTypeMetadata$();
     $m_sci_List$();
-    var xs$5 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___()]);
+    var xs$5 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___(), new $c_Lio_udash_rest_GET().init___()]);
     var this$18 = $m_sci_List$();
     var cbf$5 = this$18.ReusableCBFInstance$2;
     var y$1 = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$2, "all", jsx$1, e$2, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$5, cbf$5)));
@@ -23283,7 +23283,7 @@ $c_Llms_api_LMSGlobal$$anon$8$$anon$9$$anon$11.prototype.signatures$lzycompute__
     var jsx$5 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$2, cbf$2));
     var e$1 = $m_Lio_udash_rest_DefaultRESTFramework$().ResultTypeMetadata__Lio_udash_rest_UdashRESTFramework$ResultTypeMetadata$();
     $m_sci_List$();
-    var xs$3 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___()]);
+    var xs$3 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___(), new $c_Lio_udash_rest_GET().init___()]);
     var this$11 = $m_sci_List$();
     var cbf$3 = this$11.ReusableCBFInstance$2;
     var y = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$6, "byLibrary", jsx$5, e$1, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$3, cbf$3)));
@@ -23296,7 +23296,7 @@ $c_Llms_api_LMSGlobal$$anon$8$$anon$9$$anon$11.prototype.signatures$lzycompute__
     var jsx$1 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$4, cbf$4));
     var e$2 = $m_Lio_udash_rest_DefaultRESTFramework$().ResultTypeMetadata__Lio_udash_rest_UdashRESTFramework$ResultTypeMetadata$();
     $m_sci_List$();
-    var xs$5 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___()]);
+    var xs$5 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___(), new $c_Lio_udash_rest_GET().init___()]);
     var this$18 = $m_sci_List$();
     var cbf$5 = this$18.ReusableCBFInstance$2;
     var y$1 = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$2, "all", jsx$1, e$2, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$5, cbf$5)));
