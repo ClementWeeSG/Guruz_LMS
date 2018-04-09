@@ -1,9 +1,10 @@
 package lms.views.wishlist
 
 import lms.models.wishlist.PopularItems._
-import lms.models.wishlist.SyntheticOption._
+import lms.SyntheticOption._
 import lms.views.DataTable
 import scalatags.JsDom.all._
+import com.avsystem.commons.misc.Opt
 
 case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Books Not Yet Brought For Visits") {
   override def allPanel(): Modifier = DataTable[All](
@@ -14,8 +15,8 @@ case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Books Not
       Seq(
         (data.library),
         (data.title),
-        (data.series.fix().getOrElse("")),
-        (data.order.fix().map(_.toString).getOrElse("")),
+        (data.series.toOption.getOrElse("")),
+        (data.order.toOption.map(_.toString).getOrElse("")),
         (data.numCopies.toString)
       ).map(span(_))
     })
@@ -27,8 +28,8 @@ case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Books Not
       val data = prop.get
       Seq(
         data.title,
-        data.series.fix().getOrElse(""),
-        data.order.fix.map(_.toString).getOrElse(""),
+        data.series.toOption.getOrElse(""),
+        data.order.toOption.map(_.toString).getOrElse(""),
         data.numCopies.toString
       ).map(span(_))
     })
