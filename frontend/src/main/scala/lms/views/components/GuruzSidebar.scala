@@ -22,10 +22,10 @@ object GuruzSidebar extends CssView {
 
   val defaultItems = Seq(
     SidebarItem(GuruzSidebarStyles.Icons.Home, "Start", IndexState),
-    SidebarItem(GuruzSidebarStyles.Icons.Members, "Browse Members", MemberInfoState(None)),
-    SidebarItem(GuruzSidebarStyles.Icons.Books, "Browse Collections", ItemTypeInfoState(None)),
-    SidebarItem(GuruzSidebarStyles.Icons.BestReads, "View Top Reads", ItemPopularityState),
-    SidebarItem(GuruzSidebarStyles.Icons.Visits, "Monitor School Visits Program", WishListState(None))
+    SidebarItem(GuruzSidebarStyles.Icons.Members, "Qn 5 - Member Details", MemberInfoState(None)),
+    SidebarItem(GuruzSidebarStyles.Icons.Books, "Qn 6 - Item Details", ItemTypeInfoState(None)),
+    SidebarItem(GuruzSidebarStyles.Icons.BestReads, "Qn 7 - Most Popular Items", ItemPopularityState),
+    SidebarItem(GuruzSidebarStyles.Icons.Visits, "Qn 8 - Custom Function: Monitor School Visits", WishListState(None))
   )
 
   def iconOf(item: SidebarItem) = i(item.icon)()
@@ -48,7 +48,7 @@ object GuruzSidebar extends CssView {
     ).render
   }
 
-  def render(items: Seq[SidebarItem] = defaultItems, title: String = "Explore Libraries"): Modifier = {
+  def render(items: Seq[SidebarItem] = defaultItems, title: String = "NLB Library Management System"): Modifier = {
     nav(id := "sidebar")(
       navHeader(title),
       ul(BootstrapStyles.List.listUnstyled, GuruzSidebarStyles.Components)(
