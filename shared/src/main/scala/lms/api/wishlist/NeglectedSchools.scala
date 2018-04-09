@@ -7,9 +7,9 @@ import scala.concurrent.Future
 
 @REST
 trait NeglectedSchools {
-  @SkipRESTName
+  @SkipRESTName @GET
   def all(): Future[List[SchoolsByLibraryRow]]
 
-  @SkipRESTName
+  @SkipRESTName @GET
   def byLibrary(@URLPart lib: String): Future[List[SchoolTag]]
 }

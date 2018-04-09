@@ -6,9 +6,9 @@ import scala.concurrent.Future
 
 @REST
 trait PopularItems {
-  @SkipRESTName
+  @SkipRESTName @GET
   def all(): Future[List[lms.models.wishlist.PopularItems.All]]
 
-  @SkipRESTName
+  @SkipRESTName @GET
   def byLibrary(@URLPart lib: String): Future[List[lms.models.wishlist.PopularItems.ByLibrary]]
 }
