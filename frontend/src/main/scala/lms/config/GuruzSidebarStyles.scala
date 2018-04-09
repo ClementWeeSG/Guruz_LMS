@@ -22,6 +22,7 @@ object GuruzSidebarStyles {
     val Books = g.book
     val BestReads = g.book
     val TopReader = fa.trophy
+    val Visits = fa.checkSquare
   }
 
 }

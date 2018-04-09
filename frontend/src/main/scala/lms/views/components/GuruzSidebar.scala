@@ -24,7 +24,8 @@ object GuruzSidebar extends CssView {
     SidebarItem(GuruzSidebarStyles.Icons.Home, "Start", IndexState),
     SidebarItem(GuruzSidebarStyles.Icons.Members, "Browse Members", MemberInfoState(None)),
     SidebarItem(GuruzSidebarStyles.Icons.Books, "Browse Collections", ItemTypeInfoState(None)),
-    SidebarItem(GuruzSidebarStyles.Icons.BestReads, "View Top Reads", ItemPopularityState)
+    SidebarItem(GuruzSidebarStyles.Icons.BestReads, "View Top Reads", ItemPopularityState),
+    SidebarItem(GuruzSidebarStyles.Icons.Visits, "Monitor School Visits Program", WishListState(None))
   )
 
   def iconOf(item: SidebarItem) = i(item.icon)()
