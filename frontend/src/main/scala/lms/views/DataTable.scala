@@ -19,7 +19,7 @@ class DataTable[T: PropertyCreator](model: ModelProperty[DataLoadingModel[T]], h
     produce(loadSuccess) { loaded =>
       //println(s"Item Popularity is loaded: $loaded")
       if (loaded) {
-        UdashTable(hover = Property(true))(model.subSeq(_.elements))(
+        UdashTable(hover = Property(true), bordered = Property(true))(model.subSeq(_.elements))(
           rowFactory = (p) => tr(tableElementsFactory(p).map(name => td(name))).render,
           headerFactory = Some(() => tr(headers.map((name) => th(name))).render)
         ).render
