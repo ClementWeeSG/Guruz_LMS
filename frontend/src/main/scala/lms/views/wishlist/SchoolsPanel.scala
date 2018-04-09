@@ -1,9 +1,7 @@
 package lms.views.wishlist
 
-import lms.views.DataTable
-import org.scalajs.dom.Node
-import io.udash._
 import lms.models.wishlist.{SchoolTag, SchoolsByLibraryRow}
+import lms.views.DataTable
 import scalatags.JsDom.all._
 
 case class SchoolsPanel(model: SchoolsLoadingModel) extends WishListPanel("Schools Not Yet Visited") {
