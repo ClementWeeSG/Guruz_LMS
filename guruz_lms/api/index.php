@@ -170,7 +170,7 @@ order by cp.Lib_Name Asc, Series_Title asc, Series_Order asc, Num_of_copies desc
 	$stmt = mysqli_prepare($conn, $q);
 	return $stmt;
 	});
-})
+});
 
 Flight::map('booksByLibrary', function($lib){
 	Flight::queryTable(function ($conn) use ($lib){
@@ -187,7 +187,7 @@ order by cp.Lib_Name Asc, Series_Title asc, Series_Order asc, Num_of_copies desc
 	mysqli_stmt_bind_param($stmt, "s", $lib);
 	return $stmt;
 	});
-})
+});
 
 Flight::route('GET /wishlist/books', function(){
 	$parameter = Flight::request()->query->lib;

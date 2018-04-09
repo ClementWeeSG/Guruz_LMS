@@ -23051,31 +23051,35 @@ $c_Llms_api_LMSGlobal$$anon$8$$anon$9$$anon$10.prototype.signatures$lzycompute__
     var cbf$1 = this$6.ReusableCBFInstance$2;
     var jsx$5 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$1, cbf$1));
     var e$1 = $m_Lio_udash_rest_DefaultRESTFramework$().ResultTypeMetadata__Lio_udash_rest_UdashRESTFramework$ResultTypeMetadata$();
-    var y = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$6, "byLibrary", jsx$5, e$1, $m_sci_Nil$());
+    $m_sci_List$();
+    var xs$2 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___(), new $c_Lio_udash_rest_GET().init___()]);
+    var this$9 = $m_sci_List$();
+    var cbf$2 = this$9.ReusableCBFInstance$2;
+    var y = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$6, "byLibrary", jsx$5, e$1, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$2, cbf$2)));
     var jsx$7 = new $c_T2().init___O__O("byLibrary", y);
     var jsx$2 = $m_Lio_udash_rest_DefaultRESTFramework$();
     $m_sci_List$();
-    var xs$2 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([$m_sci_Nil$()]);
-    var this$11 = $m_sci_List$();
-    var cbf$2 = this$11.ReusableCBFInstance$2;
-    var jsx$1 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$2, cbf$2));
+    var xs$3 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([$m_sci_Nil$()]);
+    var this$13 = $m_sci_List$();
+    var cbf$3 = this$13.ReusableCBFInstance$2;
+    var jsx$1 = $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$3, cbf$3));
     var e$2 = $m_Lio_udash_rest_DefaultRESTFramework$().ResultTypeMetadata__Lio_udash_rest_UdashRESTFramework$ResultTypeMetadata$();
     $m_sci_List$();
-    var xs$3 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___(), new $c_Lio_udash_rest_GET().init___()]);
-    var this$14 = $m_sci_List$();
-    var cbf$3 = this$14.ReusableCBFInstance$2;
-    var y$1 = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$2, "all", jsx$1, e$2, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$3, cbf$3)));
+    var xs$4 = new $c_sjs_js_WrappedArray().init___sjs_js_Array([new $c_Lio_udash_rest_SkipRESTName().init___(), new $c_Lio_udash_rest_GET().init___()]);
+    var this$16 = $m_sci_List$();
+    var cbf$4 = this$16.ReusableCBFInstance$2;
+    var y$1 = new $c_Lcom_avsystem_commons_rpc_RPCFramework$Signature().init___Lcom_avsystem_commons_rpc_RPCFramework__T__sci_List__O__sci_List(jsx$2, "all", jsx$1, e$2, $as_sci_List($f_sc_TraversableLike__to__scg_CanBuildFrom__O(xs$4, cbf$4)));
     var array = [jsx$7, new $c_T2().init___O__O("all", y$1)];
-    var this$17 = new $c_scm_MapBuilder().init___sc_GenMap($m_sci_Map$EmptyMap$());
+    var this$19 = new $c_scm_MapBuilder().init___sc_GenMap($m_sci_Map$EmptyMap$());
     var i = 0;
     var len = $uI(array.length);
     while ((i < len)) {
       var index = i;
       var arg1 = array[index];
-      this$17.$$plus$eq__T2__scm_MapBuilder($as_T2(arg1));
+      this$19.$$plus$eq__T2__scm_MapBuilder($as_T2(arg1));
       i = ((1 + i) | 0)
     };
-    this.signatures$1 = $as_sci_Map(this$17.elems$1);
+    this.signatures$1 = $as_sci_Map(this$19.elems$1);
     this.bitmap$0$1 = (2 | this.bitmap$0$1)
   };
   return this.signatures$1
