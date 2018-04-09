@@ -19,7 +19,7 @@ case class ItemsPanel(model: ItemsLoadingModel) extends WishListPanel("Books Not
       ).map(span(_))
     })
 
-  override def specificPanel(): Modifier = DataTable[ByLibrary](
+  override def specificPanel(): Modifier = DataTable[All](
     model.singleLibraryModel,
     Seq("Item Title", "Series Title", "Series Order", "No. of Copies in Stock"),
     prop => {
