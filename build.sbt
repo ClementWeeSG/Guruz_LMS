@@ -109,7 +109,7 @@ lazy val frontend = project.in(file("frontend")).enablePlugins(ScalaJSPlugin)
       )
       dest
     },
-    
+
     prepareBinaries := prepareBinaries.dependsOn(Compile / compileStatics).value,
 
     //Deployment Settings
