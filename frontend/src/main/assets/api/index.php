@@ -215,7 +215,7 @@ Flight::route('GET /wishlist/books', function(){
 	if($parameter==NULL){
 		Flight::allBooks();
 	} else {
-		Flight::booksByLibrary($parameter);
+		Flight::booksByLibrary(Flight::handleSpaces($parameter));
 	}
 });
 
