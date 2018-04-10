@@ -2,6 +2,12 @@
 require_once 'flight/Flight.php';
 require 'init.php';
 
+Flight::map('handleSpaces', function($param){
+	$ret1 = str_replace('%2520',' ', $param);
+	$ret = str_replace('%20',' ', $ret1);
+	return $ret;
+});
+
 Flight::route('GET /members', function(){
 	Flight::queryArray(function($conn){
 		return mysqli_prepare($conn, "select Card_ID from g1t06.card");
@@ -14,7 +20,7 @@ Flight::route('GET /members/details/@card', function($card){
  r.Remark AS ResidencyType,
 NULLIF(count(c.Old_ID),0) as 'TotalNumberOfReplacedCards'
 from  g1t06.card c
-left join g1t06.residence_status r on r.ID = c.Residency_ID 
+left join g1t06.residence_status r on r.ID = c.Residency_ID
 where  `Name` = (
 	select `Name`
 	from g1t06.card
@@ -157,12 +163,16 @@ order by Sch_Name asc";
 	});
 });
 
+Flight::before('schoolsByLibrary', function(&$params, &$output){
+	$params[0] = Flight::handleSpaces($params[0]);
+});
+
 Flight::route('GET /wishlist/schools', function(){
 	$parameter = Flight::request()->query->lib;
 	if($parameter==NULL){
 		Flight::allSchools();
 	} else {
-		Flight::schoolsByLibrary($parameter);
+		Flight::schoolsByLibrary(Flight::handleSpaces($parameter));
 	}
 });
 
@@ -198,6 +208,8 @@ order by cp.Lib_Name Asc, Series_Title asc, Series_Order asc, Num_of_copies desc
 	});
 });
 
+
+
 Flight::route('GET /wishlist/books', function(){
 	$parameter = Flight::request()->query->lib;
 	if($parameter==NULL){
@@ -209,7 +221,17 @@ Flight::route('GET /wishlist/books', function(){
 
 Flight::map('notFound', function(){
     echo "Site is not working properly";
-}); 
+});
+
+
+Flight::route('GET /test', function(){
+	$parameter = Flight::request()->query->lib;
+	if($parameter==NULL){
+		print "[Nothing was passed.]";
+	} else {
+		print "Param Passed: ".str_replace('%20',' ',$parameter);
+	}
+});
 
 Flight::start();
 ?>
