@@ -3,10 +3,10 @@ package lms.views.wishlist
 import io.udash._
 import lms.api.LMSGlobal
 import lms.models.DataLoadingModel
-import lms.models.wishlist.{SchoolTag, SchoolsByLibraryRow}
+import lms.models.wishlist.SchoolTag
 
 class SchoolsLoadingModel extends WishListModel {
-  val allModel = ModelProperty(new DataLoadingModel[SchoolsByLibraryRow]())
+  val allModel = ModelProperty(new DataLoadingModel[SchoolTag]())
   val singleLibraryModel = ModelProperty(new DataLoadingModel[SchoolTag]())
 
   lazy val api = LMSGlobal.server.wishlist().neglectedSchools()

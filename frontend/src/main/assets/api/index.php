@@ -136,18 +136,18 @@ Flight::route("GET /libraries", function(){
 
 Flight::route('GET /wishlist/schools', function(){
 	Flight::queryTable(function ($conn){
-		$q = "select lib.Lib_Name as library, sch.Sch_Name as school from
+		$q = "select sch.Sch_Name as school, sch.Address as addr from
 school sch, library lib where sch.Sch_Name not in (
 select distinct Sch_Name from school_visit)
-order by Lib_Name, sch.Sch_Name asc;";
+order by sch.Sch_Name asc;";
 	$stmt = mysqli_prepare($conn, $q);
 	return $stmt;
 	});
 });
 
 Flight::route('GET /wishlist/schools/@lib', function($lib){
-	Flight::queryArray(function ($conn) use ($lib){
-		$q = "select sch.Sch_Name from
+	Flight::queryTable(function ($conn) use ($lib){
+		$q = "select sch.Sch_Name as school, sch.Address as addr from
 school sch where sch.Sch_Name not in (
 select distinct Sch_Name from school_visit where Lib_Name=?)
 order by Sch_Name asc";

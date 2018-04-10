@@ -20,10 +20,10 @@ class WishlistView(presenter: WishListPresenter) extends FinalView with CssView 
   private def innerPanel: Modifier = {
     div(BootstrapStyles.row, BootstrapStyles.containerFluid)(
       div(BootstrapStyles.row)(
-        new SchoolsPanel(presenter.schoolsLoadingModel).render(presenter.showingSpecific)
+        new SchoolsPanel(presenter).render(presenter)
       ),
       div(BootstrapStyles.row)(
-        new ItemsPanel(presenter.itemsLoadingModel).render(presenter.showingSpecific)
+        new ItemsPanel(presenter.itemsLoadingModel).render(presenter)
       )
     ).render
   }

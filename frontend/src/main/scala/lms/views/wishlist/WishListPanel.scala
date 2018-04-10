@@ -9,12 +9,13 @@ abstract class WishListPanel(title: String) {
 
   def specificPanel(): Modifier
 
-  def render(showingSpecific: ReadableProperty[Boolean]): Modifier = {
+  def render(presenter: WishListPresenter): Modifier = {
+    val hdr = presenter.selectedLibrary.transform(lib => title + " By " + lib)
     UdashPanel(PanelStyle.Info)(
-      UdashPanel.heading(h2(title)),
+      UdashPanel.heading(h2(bind(hdr))),
       UdashPanel.body(
         div(
-          produce(showingSpecific) { isSpecific =>
+          produce(presenter.showingSpecific) { isSpecific =>
             if (isSpecific) div(specificPanel()).render else div(allPanel()).render
           }
         ).render
