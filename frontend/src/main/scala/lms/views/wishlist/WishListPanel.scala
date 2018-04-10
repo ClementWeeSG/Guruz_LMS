@@ -10,7 +10,7 @@ abstract class WishListPanel(title: String) {
   def specificPanel(): Modifier
 
   def render(presenter: WishListPresenter): Modifier = {
-    val hdr = presenter.selectedLibrary.transform(lib => title + " By " + lib)
+    val hdr = presenter.selectedLibrary.transform(lib => title + " By " + lib.replace("%20"," "))
     UdashPanel(PanelStyle.Info)(
       UdashPanel.heading(h2(bind(hdr))),
       UdashPanel.body(
