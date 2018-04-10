@@ -134,20 +134,20 @@ Flight::route("GET /libraries", function(){
 	});
 });
 
-Flight::route('GET /wishlist/schools', function(){
+Flight::map('allSchools', function(){
 	Flight::queryTable(function ($conn){
-		$q = "select lib.Lib_Name as library, sch.Sch_Name as school from
-school sch, library lib where sch.Sch_Name not in (
+		$q = "select sch.Sch_Name as school, sch.Address as addr from
+school sch where sch.Sch_Name not in (
 select distinct Sch_Name from school_visit)
-order by Lib_Name, sch.Sch_Name asc;";
+order by sch.Sch_Name asc";
 	$stmt = mysqli_prepare($conn, $q);
 	return $stmt;
 	});
 });
 
-Flight::route('GET /wishlist/schools/@lib', function($lib){
-	Flight::queryArray(function ($conn) use ($lib){
-		$q = "select sch.Sch_Name from
+Flight::map('schoolsByLibrary', function($lib){
+	Flight::queryTable(function ($conn) use ($lib){
+		$q = "select sch.Sch_Name as school, sch.Address as addr from
 school sch where sch.Sch_Name not in (
 select distinct Sch_Name from school_visit where Lib_Name=?)
 order by Sch_Name asc";
@@ -155,6 +155,15 @@ order by Sch_Name asc";
 	mysqli_stmt_bind_param($stmt, "s", $lib);
 	return $stmt;
 	});
+});
+
+Flight::route('GET /wishlist/schools', function(){
+	$parameter = Flight::request()->query->lib;
+	if($parameter==NULL){
+		Flight::allSchools();
+	} else {
+		Flight::schoolsByLibrary($parameter);
+	}
 });
 
 Flight::map('allBooks', function(){
@@ -196,11 +205,6 @@ Flight::route('GET /wishlist/books', function(){
 	} else {
 		Flight::booksByLibrary($parameter);
 	}
-});
-
-Flight::route('GET /debug-url', function(){
-	$frag = Flight::request()->query->input;
-	Flight::json($frag);
 });
 
 Flight::map('notFound', function(){

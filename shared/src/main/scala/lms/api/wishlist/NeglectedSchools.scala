@@ -11,5 +11,5 @@ trait NeglectedSchools {
   def all(): Future[List[SchoolTag]]
 
   @SkipRESTName @GET
-  def byLibrary(@URLPart lib: String): Future[List[SchoolTag]]
+  def byLibrary(lib: String): Future[List[SchoolTag]]
 }

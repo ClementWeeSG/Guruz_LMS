@@ -40,7 +40,7 @@ trait WishListModel {
   }
 
   def resetModel[T: ModelPropertyCreator](model: ModelProperty[DataLoadingModel[T]]): Unit = {
-    model.subProp(_.loadingText).set("Loading Wishlist schools ...")
+    model.subProp(_.loadingText).set("Loading Wishlist data ...")
     model.subProp(_.loaded).set(false)
     model.subProp(_.error).set(false)
     model.subSeq(_.elements).clear()

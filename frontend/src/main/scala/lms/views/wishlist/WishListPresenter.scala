@@ -14,6 +14,7 @@ class WishListPresenter extends Presenter[WishListState] with ViewFactory[WishLi
   val itemsLoadingModel = new ItemsLoadingModel
   val libraries = SeqProperty.empty[String]
   val selectedLibrary = Property.empty[String]
+  val all = "All Libraries"
 
 
   override def handleState(state: WishListState): Unit = {
@@ -22,10 +23,11 @@ class WishListPresenter extends Presenter[WishListState] with ViewFactory[WishLi
       case None =>
         println("Wish List: Loading Data")
         loadAll()
+        selectedLibrary.set(all)
         selectedLibrary.listen(lib => ApplicationContext.applicationInstance.goTo(WishListState(Option(lib).filter(_.nonEmpty).filter(_ != "(All Libraries)"))))
-      case Some("(All Libraries)") =>
+      case Some("All Libraries") =>
         println("Wish List: Loading Data")
-        selectedLibrary.set("(All Libraries)")
+        selectedLibrary.set(all)
         loadAll()
         selectedLibrary.listen(lib => ApplicationContext.applicationInstance.goTo(WishListState(Option(lib).filter(_.nonEmpty).filter(_ != "(All Libraries)"))))
       case Some(library) =>
@@ -40,7 +42,7 @@ class WishListPresenter extends Presenter[WishListState] with ViewFactory[WishLi
     libraries.clear()
     LMSGlobal.server.libraries() onComplete {
       case Success(libs) =>
-        libraries.append("(All Libraries)")
+        libraries.append("All Libraries")
         libraries.append(libs: _*)
         println("Wishlist: Loaded Library List successfully")
       case Failure(ex) =>
