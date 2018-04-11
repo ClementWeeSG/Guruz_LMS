@@ -1,80 +1,59 @@
-# Udash REST with Bootstrap Components Example
+# Demo Library Management System (Reporting System) For IS202 Module
 
-The Udash REST module provides tools for wrapping REST APIs in type safe interfaces. It includes:
+This application is done for the IS202 Module on Data Management at Singapore Management University. it consists of two parts:
 
-* REST interface description based on Scala traits and annotations
-* mapping Scala methods to REST calls
-* versions for both JVM and JS code
+* A REST Backend done in PHP 5.4
+* A Frontend done in HTML 5 and Javascript
 
-The Udash Bootstrap Components module provides type-safe wrapper for Twitter Bootstrap components. It includes:
+## Frontend Module
 
-* type-safe API for Twitter Bootstrap components 
-* components designed to be used with the Udash Properties system 
-* support of Glyphicons & FontAwesome
+The Frontend module is coded in [Scala](http://scala-lang.org), and transpiled to Javascript using the [ScalaJS](https://www.scala-js.org/) compiler. It is built on top of the [Udash Web Framework](http://guide.udash.io).
 
-## Learning Scala
+Its consists of the following source files:
 
-* [Documentation](http://scala-lang.org/documentation/)
-* [API Reference](http://www.scala-lang.org/api/2.11.7/)
-* [Functional Programming Principles in Scala, free on Coursera.](https://www.coursera.org/course/progfun)
-* [Tutorials](http://docs.scala-lang.org/tutorials/)
+* All the files in [*frontend/src/main/scala*](frontend/src/main/scala)
+* [*frontend/src/main/assets/index.html*](frontend/src/main/assets/index.html)
+*  [*frontend/src/main/assets/styles/guruz-sidebar.css*](frontend/src/main/assets/styles/guruz-sidebar.css)
 
+### UI Features
 
-## Learning Scala.js
+* Collapsible sidebar navigation with icons.
+* Auto-updating tables based on inputs
+* Auto-changing URLs based on inputs
+* Self-validating text inputs (For Qn 6 only)
 
-* [Documentation](http://www.scala-js.org/doc/)
-* [Tutorials](http://www.scala-js.org/tutorial/)
-* [Scala.js Fiddle](http://www.scala-js-fiddle.com/)
+### Functionality
 
+Functionality was based on the Assignment requirements:
 
-## Learning Udash
+* For Qn 5 - Auto-populated dropdown of Card ID which auto-populates a table showing Member Details and Transaction Details based on the selected value. Where replacements are NULL, the screen shows a user-friendly "(None)" for replacements in the Member Details Panel.
 
-* [Homepage](http://udash.io/)
-* [Documentation](http://guide.udash.io/)
+* For Qn 6 - A pair of self-validating text-inputs for a data range that auto-updates a table showing the books with the highest lend and renew rates. The validation prevents the table from throwing an error.
 
+* For Qn 7 - Auto-populated dropdown of Item Type that auto-updates a table showing the various details of items in a series.
 
-## Development
+* For Qn 8 - The function is a tracking list for use in a School Visits Program, showing the list of schools not visited by libraries and the items not yet brought by a library on a school visit.
+
+## Backend Module
+
+The backend module is coded in [PHP 5](htttp://www.php.net). It makes use of the native built mysql1 extension and the [Flight HTTP](http://flightphp.com) micro-framework.
+
+The custom code consists of the following files in the `src/main/assets/api` directory:
+* index.php - contains the main application code, including *all* SQL queries.
+* init.php - contains some helper functions, mapped using [Flight::map](http://flightphp.com/learn/#extending).
+
+For more info on Flight, please consult the [library documentation](http://flightphp.com/learn).
+
+***NOTE:: The backend module in the backend folder is not part of this project; it is code included in the base project adapted from.***
+
+## Building and Configuring
 
 The build tool for this project is [sbt](http://www.scala-sbt.org), which is 
 set up with a [plugin](http://www.scala-js.org/doc/sbt-plugin.html) 
 to enable compilation and packaging of Scala.js web applications. 
 
-The Scala.js plugin for SBT supports two compilation modes:
- 
-* `fullOptJS` is a full program optimization, which is slower,
-* `fastOptJS` is fast, but produces large generated javascript files - use it for development.
+For deployment, this project provides additional SBT tasks: `deploy` and `prepareBinaries`.
 
-The configuration of this project provides additional SBT tasks: `compileStatics` and `compileAndOptimizeStatics`. 
-These tasks compile the sources to JavaScript and prepare other static files. The former task uses `fastOptJS`,
-the latter `fullOptJS`.
+The `deploy` relies on the SBT setting `apacheServer` to determine where to deploy your folder in, usually a subfolder of the Apache webroot folder.
 
-After installation, run `sbt` like this:
-
-```
-$ sbt
-```
-
-You can compile the project:
-
-```
-sbt> compile 
-```
-
-You can compile static frontend files as follows:
-
-```
-sbt> compileStatics
-```
-
-Then you can run the Jetty server:
-
-```
-sbt> run
-```
-
-Open: [http://localhost:8080/](http://localhost:8080/)
-
-## What's next?
-
-Take a look at [Udash application template](https://github.com/UdashFramework/udash.g8). You can generate
-customized SBT project with Udash application by calling: `sbt new UdashFramework/udash.g8`. 
+`prepareBinaries` builds a set of files into your code folder, using the default site name, `guruz_lms`.
