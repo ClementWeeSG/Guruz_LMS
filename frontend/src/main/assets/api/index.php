@@ -8,12 +8,14 @@ Flight::map('handleSpaces', function($param){
 	return $ret;
 });
 
+//Qn 5a - Get Card IDs
 Flight::route('GET /members', function(){
 	Flight::queryArray(function($conn){
 		return mysqli_prepare($conn, "select Card_ID from g1t06.card");
 	});
 });
 
+//Qn 5b - Get Member details
 Flight::route('GET /members/details/@card', function($card){
 	Flight::queryRow(array("memberName","memberType","residencyType","replacements"),function($conn) use ($card){
 		$q = "select c.`Name` as MemberName,  c.Member_Type AS MemberType,
@@ -32,6 +34,7 @@ where  `Name` = (
 	});
 });
 
+//Qn 5c - Get Member transactions
 Flight::route('GET /members/transactions/@card', function($card){
 	Flight::queryTable(function($conn) use ($card){
 		$query = "SELECT DISTINCT
@@ -85,6 +88,7 @@ FROM
 	});
 });
 
+//Qn 6 - Get Item Popularity
 Flight::route('GET /item-popularity', function(){
 	$start = Flight::request()->query->start;
 	$end = Flight::request()->query['end'];
@@ -114,12 +118,14 @@ Flight::route('GET /item-popularity', function(){
 	});
 });
 
+//Qn 7a - Get Item Types
 Flight::route('GET /item-types', function(){
 	Flight::queryArray(function($conn){
 		return mysqli_prepare($conn, "select `Name` from g1t06.item_type");
 	});
 });
 
+//Qn 7b - Get Item Details
 Flight::route('GET /series/@kind', function($kind){
 	Flight::queryTable(function ($conn) use ($kind){
 		$q = "SELECT Series_Title AS series, Title AS title,  Series_Order AS `order`, count(distinct Lib_Name) AS numLibs FROM g1t06.item it, g1t06.library_copies lc
@@ -134,6 +140,7 @@ order by Series_Title asc, Series_Order asc";
 	});
 });
 
+//Qn 8 - dropdown
 Flight::route("GET /libraries", function(){
 	Flight::queryArray(function($conn){
 		return mysqli_prepare($conn, "select Lib_Name from g1t06.library");
@@ -167,6 +174,7 @@ Flight::before('schoolsByLibrary', function(&$params, &$output){
 	$params[0] = Flight::handleSpaces($params[0]);
 });
 
+//QN 8 - Schools Not Visited
 Flight::route('GET /wishlist/schools', function(){
 	$parameter = Flight::request()->query->lib;
 	if($parameter==NULL){
@@ -209,7 +217,7 @@ order by cp.Lib_Name Asc, Series_Title asc, Series_Order asc, Num_of_copies desc
 });
 
 
-
+// Qn 8 - Books not yet brought
 Flight::route('GET /wishlist/books', function(){
 	$parameter = Flight::request()->query->lib;
 	if($parameter==NULL){
@@ -221,16 +229,6 @@ Flight::route('GET /wishlist/books', function(){
 
 Flight::map('notFound', function(){
     echo "Site is not working properly";
-});
-
-
-Flight::route('GET /test', function(){
-	$parameter = Flight::request()->query->lib;
-	if($parameter==NULL){
-		print "[Nothing was passed.]";
-	} else {
-		print "Param Passed: ".str_replace('%20',' ',$parameter);
-	}
 });
 
 Flight::start();
