@@ -46,6 +46,14 @@ For more info on Flight, please consult the [library documentation](http://fligh
 
 ***NOTE:: The backend module in the backend folder is not part of this project; it is code included in the base project adapted from.***
 
+### SQL Queries
+
+For the SQL queries in index.php, there are 3 different helper functions, each using a different mysqli function:
+
+* queryRow uses mysqli_fetch_assoc
+* queryArray uses mysqli_stmt_fetch
+* queryTable uses mysqli_fetch_all
+
 ## Precompiled Package
 
 This repository provides a precompiled version of the package. This is the folder [guruz_lms](guruz_lms).
