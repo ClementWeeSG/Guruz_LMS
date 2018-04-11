@@ -46,6 +46,27 @@ For more info on Flight, please consult the [library documentation](http://fligh
 
 ***NOTE:: The backend module in the backend folder is not part of this project; it is code included in the base project adapted from.***
 
+## Precompiled Package
+
+This repository provides a precompiled version of the package. This is the folder [guruz_lms](guruz_lms).
+
+To deploy, simply copy this entire folder to the Apache Server webroot folder. On Windows WAMP, the default will be `C:\Wamp64\www`.
+
+If you have deployed to another subfolder and/or renamed the folder upon deployment, you need to open [`/index.html`](guruz_lms/index.html) and edit line 9.
+
+By default, line 9 says
+
+```javascript
+var lms = {base: "/guruz_lms"};
+```
+Change "guruz_lms" to your correct path, relative to the webroot directory.
+
+For example, if you place the folder in the Apache webroot directory, but rename it to `php`, then your line 9 should read as follows:
+
+```javascript
+var lms = {base: "/php"};
+```
+
 ## Building and Configuring
 
 The build tool for this project is [sbt](http://www.scala-sbt.org), which is 
